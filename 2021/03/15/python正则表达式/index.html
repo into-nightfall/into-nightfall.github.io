@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>python正则表达式 | 小象のblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="\d匹配一个数字 \w匹配一个数字或字母 .匹配任意字符 *匹配0到多个字符，+匹配1到多个字符，?匹配0或1个字符，&amp;#123;n&amp;#125;表示n个字符，&amp;#123;n,m&amp;#125;表示n-m个字符 \s匹配一个空格（也包括tab）  1\d&amp;#123;3&amp;#125;\s+\d*	#匹配3个数字，后面至少有一个空格，再后面有可能有数字，有可能没数字   []可用于更精确的匹配  1[0-9">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python正则表达式">
+<meta property="og:url" content="https://xiaoxiangxiong.gitee.io/2021/03/15/python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="小象のblog">
+<meta property="og:description" content="\d匹配一个数字 \w匹配一个数字或字母 .匹配任意字符 *匹配0到多个字符，+匹配1到多个字符，?匹配0或1个字符，&amp;#123;n&amp;#125;表示n个字符，&amp;#123;n,m&amp;#125;表示n-m个字符 \s匹配一个空格（也包括tab）  1\d&amp;#123;3&amp;#125;\s+\d*	#匹配3个数字，后面至少有一个空格，再后面有可能有数字，有可能没数字   []可用于更精确的匹配  1[0-9">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-15T12:22:32.000Z">
+<meta property="article:modified_time" content="2021-04-09T03:18:20.142Z">
+<meta property="article:author" content="小象">
+<meta property="article:tag" content="xiaoxiang,小象のblog">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="小象のblog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="mheader">
+    <div class="mtitle-wrap">
+        <a href="/" class="mtitle">小象のblog</a>
+		<a href="/archives/" class="msubtitle">概览</a>
+		<a href="http://xiaoxiang.space" target="_self" class="msubtitle">说点什么</a>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/15/python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-date">
+  <time datetime="2021-03-15T12:22:32.000Z" itemprop="datePublished">2021-03-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python正则表达式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><code>\d</code>匹配一个数字</li>
+<li><code>\w</code>匹配一个数字或字母</li>
+<li><code>.</code>匹配任意字符</li>
+<li><code>*</code>匹配0到多个字符，<code>+</code>匹配1到多个字符，<code>?</code>匹配0或1个字符，<code>&#123;n&#125;</code>表示n个字符，<code>&#123;n,m&#125;</code>表示n-m个字符</li>
+<li><code>\s</code>匹配一个空格（也包括tab）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\d&#123;<span class="number">3</span>&#125;\s+\d*	<span class="comment">#匹配3个数字，后面至少有一个空格，再后面有可能有数字，有可能没数字</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>[]</code>可用于更精确的匹配</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">0</span><span class="number">-9</span>a-z\_] <span class="comment">#匹配一个数字或一个小写字母或一个下划线</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>A|B</code>可匹配A或B</li>
+<li><code>^</code>表示行的开头，<code>^\d</code>表示必须以数字开头</li>
+<li><code>$</code>表示行的结束，<code>$\d</code>表示必须以数字结束</li>
+</ul>
+<h2 id="re模块"><a href="#re模块" class="headerlink" title="re模块"></a>re模块</h2><ul>
+<li>因为python字符串本身也用<code>\</code>转义，可以使用<code>r</code>前缀，就可以不用考虑字符串转义了。<code>r&#39;ABC\-001&#39;</code></li>
+<li><code>re.match(r&#39;\d&#123;3&#125;\-\d$&#39;),&#39;010-1&#39;)</code>，如果匹配成功就返回一个Mache对象，否则返回none。</li>
+<li><code>re.split(r&#39;[\s\,]+&#39;,&#39;a,b, c  d&#39;)</code>，切割字符串，能切割出<code>[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;]</code></li>
+<li>正则表达式还有提取字串的功能，用<code>()</code>表示的就是要提取的分组。<code>r&#39;(\d&#123;3&#125;)-(\d&#123;3,8&#125;)&#39;</code>就定义了两个组，可以使用<code>group(n)</code>方法提取出子串</li>
+</ul>
+<h2 id="贪婪匹配"><a href="#贪婪匹配" class="headerlink" title="贪婪匹配"></a>贪婪匹配</h2><ul>
+<li>正则默认的时贪婪匹配，加个<code>?</code>就可以采用非贪婪匹配。<code>\d+?</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">r = re.match(<span class="string">&#x27;(\d+?)(0*)$&#x27;</span>,<span class="string">&#x27;1200000&#x27;</span>)</span><br><span class="line">print(r.groups())</span><br><span class="line"><span class="comment">#结果(&#x27;12&#x27;, &#x27;00000&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/03/16/django%E8%B5%B7%E6%AD%A5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          django起步
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/03/15/python%E6%A8%A1%E5%9D%97/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">python模块</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/web/">web</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/django/">django</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/web/http/">http</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/">mybatis入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/24/cors/">cors</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/22/android/">android</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 小象<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

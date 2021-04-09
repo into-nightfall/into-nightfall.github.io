@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>wait和notify | 小象のblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在调用wait方法时，线程必须要持有被调用对象的锁，当调用wait方法之后，线程就会释放掉该对象的锁。 在调用Thread类的sleep方法时，线程是不会释放掉对象的锁的。    当调用wait方法时，首先要确保调用了wait方法的线程已经持有了对象的锁。 当调用了wait后，该线程就会释放掉这个对象的锁，然后进入等待状态，该线程进入对象的等待集合中（wait set）。 当线程调用了wait后">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wait和notify">
+<meta property="og:url" content="https://xiaoxiangxiong.gitee.io/2020/10/06/wait%E5%92%8Cnotify/index.html">
+<meta property="og:site_name" content="小象のblog">
+<meta property="og:description" content="在调用wait方法时，线程必须要持有被调用对象的锁，当调用wait方法之后，线程就会释放掉该对象的锁。 在调用Thread类的sleep方法时，线程是不会释放掉对象的锁的。    当调用wait方法时，首先要确保调用了wait方法的线程已经持有了对象的锁。 当调用了wait后，该线程就会释放掉这个对象的锁，然后进入等待状态，该线程进入对象的等待集合中（wait set）。 当线程调用了wait后">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-06T11:40:01.000Z">
+<meta property="article:modified_time" content="2021-04-09T03:18:20.108Z">
+<meta property="article:author" content="小象">
+<meta property="article:tag" content="xiaoxiang,小象のblog">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="小象のblog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="mheader">
+    <div class="mtitle-wrap">
+        <a href="/" class="mtitle">小象のblog</a>
+		<a href="/archives/" class="msubtitle">概览</a>
+		<a href="http://xiaoxiang.space" target="_self" class="msubtitle">说点什么</a>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-wait和notify" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/10/06/wait%E5%92%8Cnotify/" class="article-date">
+  <time datetime="2020-10-06T11:40:01.000Z" itemprop="datePublished">2020-10-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>►<a class="article-category-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      wait和notify
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>在调用wait方法时，线程必须要持有被调用对象的锁，当调用wait方法之后，线程就会释放掉该对象的锁。</li>
+<li>在调用Thread类的sleep方法时，线程是<strong>不会释放掉对象的锁</strong>的。</li>
+</ul>
+<hr>
+<ol>
+<li>当调用wait方法时，首先要确保调用了wait方法的线程已经持有了对象的锁。</li>
+<li>当调用了wait后，该线程就会释放掉这个对象的锁，然后进入等待状态，该线程进入对象的等待集合中（wait set）。</li>
+<li>当线程调用了wait后进入到等待状态时，它就等待其他线程调用相同对象的notify和notifyAll方法来使得自己被唤醒。</li>
+<li>调用wait方法的代码片段需要放在一个synchronized块或者被synchronized修饰的方法中。</li>
+<li>当调用了对象的notify方法时，它会随机唤醒该对象等待集合中（wait set）的任意一个线程，当某个线程被唤醒后，它就会与其他线程一同竞争对象的锁。</li>
+<li>当调用对象的notifyAll方法时，它会唤醒该对象等待集合中（wait set）中所有的线程，这些线程被唤醒后，又会开始竞争对象的锁。</li>
+<li>某一时刻，只有唯一的一个线程拥有对象的锁。</li>
+</ol>
+<h3 id="具体案例"><a href="#具体案例" class="headerlink" title="具体案例"></a>具体案例</h3><p>Demon对象有一个int类型的属性counter，该值初始为0；<br>创建四个线程，两个线程对该值增1，两个线程对该值减1；<br>输出counter每次变化后的结果，要求输出结果为1010101010…。</p>
+<h5 id="包含counter的Demon类"><a href="#包含counter的Demon类" class="headerlink" title="包含counter的Demon类"></a>包含counter的Demon类</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该对象提供加1和减1的操作</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demon</span></span>&#123;</span><br><span class="line">    <span class="comment">//counter</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> counter=<span class="number">0</span>;</span><br><span class="line">	<span class="comment">//对方法加锁，当一个线程要调用该方法时，需要先获取该对象的锁</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">inc</span><span class="params">()</span></span>&#123;<span class="comment">//counter加1</span></span><br><span class="line">        <span class="comment">//此处必须使用while而不是if，防止被其他不相关的线程唤醒</span></span><br><span class="line">        <span class="keyword">while</span>(counter!=<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                wait();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        counter++;</span><br><span class="line">        System.out.print(counter);</span><br><span class="line">        <span class="comment">/*此处必须使用notifyAll，notify会从等待队列中</span></span><br><span class="line"><span class="comment">        随机选择一个线程唤醒，可能会导致程序一直阻塞*/</span></span><br><span class="line">        notifyAll();</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//counter减1</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">dec</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(counter!=<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                wait();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        counter--;</span><br><span class="line">        System.out.print(counter);</span><br><span class="line">        notifyAll();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>关键代码如上，剩余的代码也都比较简单，就省略了。如果你需要所有代码，可以通过<code>ctrl+u</code>查看网页源代码，并使用<code>ctrl+f</code>快捷键搜索”黑魔仙变身”即可找到完整代码。手机需要使用能查看网页源代码的浏览器，如via等。</strong></p>
+<!--
+//黑魔仙变身
+//该对象提供加1和减1的操作
+class Demon{
+    //counter
+    private int counter=0;
+    //对方法加锁，当一个线程要调用该方法时，需要先获取该对象的锁
+    public synchronized void inc(){//counter加1
+        //此处必须使用while而不是if，防止被其他不相关的线程唤醒
+        while(counter!=0){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        counter++;
+        System.out.print(counter);
+        /*此处必须使用notifyAll，notify会从等待队列中
+        随机选择一个线程唤醒，可能会导致程序一直阻塞*/
+        notifyAll();
+    }
+    //counter减1
+    public synchronized void dec(){
+        while(counter!=1){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        counter--;
+        System.out.print(counter);
+        notifyAll();
+    }
+}
+//执行counter++
+class IncThread implements Runnable{
+    private Demon demon;
+    public IncThread(Demon demon){
+        this.demon=demon;
+    }
+    //实现Runnable的run方法
+    public void run() {
+        for(int i=0;i<30;i++) {
+            demon.inc();
+        }
+    }
+}
+//执行counter--
+class DecThread implements Runnable{
+    private Demon demon;
+    public DecThread(Demon demon){
+        this.demon=demon;
+    }
+    public void run() {
+        for(int i=0;i<30;i++) {
+            demon.dec();
+        }
+    }
+}
+//测试类
+public class test {
+    public static void main(String[] args) throws InterruptedException {
+        Demon demon=new Demon();
+        Thread t1=new Thread(new IncThread(demon));
+        Thread t2=new Thread(new IncThread(demon));
+        Thread t3=new Thread(new DecThread(demon));
+        Thread t4=new Thread(new DecThread(demon));
+        t1.start();
+        t2.start();
+        t3.start();
+        t4.start();
+    }
+}
+-->
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/10/08/%E5%B9%B6%E5%8F%91%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          并发相关信息
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/30/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">垃圾回收器</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/web/">web</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/django/">django</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/web/http/">http</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/">mybatis入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/24/cors/">cors</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/22/android/">android</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 小象<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

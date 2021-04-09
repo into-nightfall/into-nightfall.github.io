@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>类加载机制 | 小象のblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="类加载的过程 加载 通过一个类的全限定名来获取定义此类的二进制字节流。 将这个字节流所代表的静态存储结构转化为方法去的运行时数据结构。 在内存中生成一个代表这个类的java.lang.Class对象，作为方法区这个类的各种数据的访问入口。   验证 确保Class文件的字节流对象中包含的信息符合当前虚拟机的要求，并且不会危虚拟机自身的安全。   准备 准备阶段是正式为类变量分配内存并设置类变量初始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="类加载机制">
+<meta property="og:url" content="https://xiaoxiangxiong.gitee.io/2020/07/21/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="小象のblog">
+<meta property="og:description" content="类加载的过程 加载 通过一个类的全限定名来获取定义此类的二进制字节流。 将这个字节流所代表的静态存储结构转化为方法去的运行时数据结构。 在内存中生成一个代表这个类的java.lang.Class对象，作为方法区这个类的各种数据的访问入口。   验证 确保Class文件的字节流对象中包含的信息符合当前虚拟机的要求，并且不会危虚拟机自身的安全。   准备 准备阶段是正式为类变量分配内存并设置类变量初始">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-21T02:57:57.000Z">
+<meta property="article:modified_time" content="2021-04-09T03:18:20.122Z">
+<meta property="article:author" content="小象">
+<meta property="article:tag" content="xiaoxiang,小象のblog">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="小象のblog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="mheader">
+    <div class="mtitle-wrap">
+        <a href="/" class="mtitle">小象のblog</a>
+		<a href="/archives/" class="msubtitle">概览</a>
+		<a href="http://xiaoxiang.space" target="_self" class="msubtitle">说点什么</a>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-类加载机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/21/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" class="article-date">
+  <time datetime="2020-07-21T02:57:57.000Z" itemprop="datePublished">2020-07-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>►<a class="article-category-link" href="/categories/java/jvm/">jvm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      类加载机制
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="类加载的过程"><a href="#类加载的过程" class="headerlink" title="类加载的过程"></a>类加载的过程</h3><ul>
+<li><strong>加载</strong><ul>
+<li>通过一个类的全限定名来获取定义此类的二进制字节流。</li>
+<li>将这个字节流所代表的静态存储结构转化为方法去的运行时数据结构。</li>
+<li>在内存中生成一个代表这个类的java.lang.Class对象，作为方法区这个类的各种数据的访问入口。</li>
+</ul>
+</li>
+<li><strong>验证</strong><ul>
+<li>确保Class文件的字节流对象中包含的信息符合当前虚拟机的要求，并且不会危虚拟机自身的安全。</li>
+</ul>
+</li>
+<li><strong>准备</strong><ul>
+<li>准备阶段是正式为类变量分配内存并设置类变量初始值（零值）的阶段，这些类变量使用的内存都将在方法区进行分配。</li>
+<li>如果类变量同时也被final修饰了，那它就是一个常量，准备阶段就会被初始化为代码中指定的值。</li>
+</ul>
+</li>
+<li><strong>解析</strong><ul>
+<li>将常量池内的符号引用替换为直接引用的过程。</li>
+<li>符号引用：以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能无歧义地定位到目标即可。</li>
+<li>直接引用：可以是直接指向目标的指针、相对偏移量或是一个能间接定位到目标的句柄。</li>
+</ul>
+</li>
+<li><strong>初始化</strong><ul>
+<li>初始化时执行类构造器clinit的方法的过程。</li>
+<li>clinit方法是由编译器自动收集类中的所有类变量的赋值动作和静态语句块static{}中的语句合并产生的，编译器收集的顺序是由语句在源文件中出现的顺序所决定的。</li>
+<li>定义在静态语句块之后的类变量，在该静态语句块中可以赋值，但不能访问。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Main</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span>&#123;</span><br><span class="line">        i=<span class="number">0</span>;	<span class="comment">//正常编译通过</span></span><br><span class="line">        System.out.println(i);	<span class="comment">//这句编译器会提示非法向前引用</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> i=<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><ul>
+<li>启动类加载器Bootstrap ClassLoader<ul>
+<li>用来加载Java的核心类库（JAVA_HOME\lib目录或者被-Xbootclasspath参数所指定的路径中）。</li>
+<li>没有父类加载器</li>
+<li>加载扩展类和应用程序类加载器，并指定为它们的父类加载器。</li>
+</ul>
+</li>
+<li>扩展类加载器Extension ClassLoader<ul>
+<li>派生于ClassLoader，父类为Bootstrap。</li>
+<li>从java.ext.dirs系统变量所指定的路径中加载所有类库。</li>
+</ul>
+</li>
+<li>应用程序类加载器Application ClassLoader<ul>
+<li>派生于ClassLoader，父类为扩展类加载器。</li>
+<li>负责加载classspath下的类库。</li>
+<li>程序中的默认类加载器。</li>
+</ul>
+</li>
+</ul>
+<h3 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h3><ul>
+<li>如果一个类收到类加载请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成。</li>
+<li>如果父类还有父类，则进一步向上委托，请求最终到达顶层的启动类加载器中。</li>
+<li>如果父类可以完成加载，就成功返回。否则，子类加载器才会尝试自己去加载。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/07/29/collection%E5%92%8Cmap/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          collection和map
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/21/%E5%BF%AB%E6%8E%92/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">快排</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/web/">web</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/django/">django</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/web/http/">http</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/">mybatis入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/24/cors/">cors</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/22/android/">android</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 小象<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

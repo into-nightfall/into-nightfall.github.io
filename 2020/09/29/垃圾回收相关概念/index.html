@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>垃圾回收相关概念 | 小象のblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="System.gc()的理解 在默认情况下，通过System.gc()或者Runtime.getRuntime().gc()的调用会显示触发Full GC，但是该方法可能不是立刻就执行。  内存溢出 产生原因：没有空闲内存，并且垃圾收集器也无法提供更多内存。  内存泄漏 严格定义：对象不再被程序使用了，但是GC又不能回收他们的情况（仍然存在引用链）。 宽泛定义：一些不太好的实践会导致对象的生命周期">
+<meta property="og:type" content="article">
+<meta property="og:title" content="垃圾回收相关概念">
+<meta property="og:url" content="https://xiaoxiangxiong.gitee.io/2020/09/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:site_name" content="小象のblog">
+<meta property="og:description" content="System.gc()的理解 在默认情况下，通过System.gc()或者Runtime.getRuntime().gc()的调用会显示触发Full GC，但是该方法可能不是立刻就执行。  内存溢出 产生原因：没有空闲内存，并且垃圾收集器也无法提供更多内存。  内存泄漏 严格定义：对象不再被程序使用了，但是GC又不能回收他们的情况（仍然存在引用链）。 宽泛定义：一些不太好的实践会导致对象的生命周期">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-29T10:29:54.000Z">
+<meta property="article:modified_time" content="2021-04-09T03:18:20.111Z">
+<meta property="article:author" content="小象">
+<meta property="article:tag" content="xiaoxiang,小象のblog">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="小象のblog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="mheader">
+    <div class="mtitle-wrap">
+        <a href="/" class="mtitle">小象のblog</a>
+		<a href="/archives/" class="msubtitle">概览</a>
+		<a href="http://xiaoxiang.space" target="_self" class="msubtitle">说点什么</a>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-垃圾回收相关概念" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/" class="article-date">
+  <time datetime="2020-09-29T10:29:54.000Z" itemprop="datePublished">2020-09-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>►<a class="article-category-link" href="/categories/java/jvm/">jvm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      垃圾回收相关概念
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="System-gc-的理解"><a href="#System-gc-的理解" class="headerlink" title="System.gc()的理解"></a>System.gc()的理解</h3><ul>
+<li>在默认情况下，通过System.gc()或者Runtime.getRuntime().gc()的调用会显示触发Full GC，但是该方法可能不是立刻就执行。</li>
+</ul>
+<h3 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h3><ul>
+<li>产生原因：没有空闲内存，并且垃圾收集器也无法提供更多内存。</li>
+</ul>
+<h3 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h3><ul>
+<li>严格定义：对象不再被程序使用了，但是GC又不能回收他们的情况（仍然存在引用链）。</li>
+<li>宽泛定义：一些不太好的实践会导致对象的生命周期变得很长，甚至导致OOM，也叫宽泛意义上的内存泄漏。</li>
+</ul>
+<h3 id="安全点"><a href="#安全点" class="headerlink" title="安全点"></a>安全点</h3><ul>
+<li>程序执行时并非在所有的地方都能停下来开始GC，只有在特定的位置才能停顿下来开始GC，这些位置称为“安全点”（safepoint）。</li>
+<li>如何在GC发生时，检测所有的程序都跑到最近的安全点停顿下来了呢 –&gt; 主动式中断：设置一个中断标志，各个线程运行到safe point的时候主动轮询这个标志，如果中断标志为真，则将自己进行中断挂起。</li>
+</ul>
+<h3 id="安全区域"><a href="#安全区域" class="headerlink" title="安全区域"></a>安全区域</h3><ul>
+<li>指在一段代码片段中，对象的引用关系不会发生变化，在这个区域中的任何位置开始GC都是安全的。</li>
+<li>可以应对处于sleep或者blocked状态的线程，这时候线程无法响应jvm的中断请求，“走”到安全点去中断挂起。</li>
+<li>当程序运行到safe region的代码时，首先标识已经进入了safe region，如果这段时间发生了gc，jvm会忽略标识为safe region状态的线程。</li>
+<li>当线程即将离开safe region时，会检测jvm是否已经完成了gc，如果完成了，则继续运行，否则线程必须等待直到收到可以安全离开safe region的信号为止。</li>
+</ul>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ul>
+<li><p><strong>强引用</strong>：类似“Object object=new Object()”这类的引用，只要强引用还存在，就永不回收。</p>
+</li>
+<li><p><strong>软引用</strong>：内存不足才回收。</p>
+</li>
+<li><p><strong>弱引用</strong>：发现即回收。</p>
+</li>
+<li><p><strong>虚引用</strong>：对象回收跟踪。</p>
+<ul>
+<li>如果一个对象仅持有虚引用，那么它和没有引用几乎是一样的，随时都可能被垃圾回收器回收。</li>
+<li>它不能单独使用，也无法通过虚引用来获取被引用的对象。当试图通过虚引用的get方法来获取对象时，总是null。</li>
+<li>为一个对象设置虚引用关联的唯一目的就是能够在这个对象被收集器回收时收到一个系统通知。</li>
+<li>虚引用必须和引用队列一起使用。虚引用在创建时必须提供一个引用队列作为参数。当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象后，将这个虚引用加入引用队列，以通知引用程序对象的回收情况。</li>
+<li>由于虚引用可以跟踪对象的回收时间，因此，也可以将一些资源释放操作放置在虚引用中执行和记录。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//声明强引用</span></span><br><span class="line">Object obj=<span class="keyword">new</span> Object();</span><br><span class="line"><span class="comment">//声明软引用</span></span><br><span class="line">SoftReference&lt;Object&gt; sf=<span class="keyword">new</span> SoftReference&lt;Object&gt;(<span class="keyword">new</span> Object());</span><br><span class="line"><span class="comment">//声明弱引用</span></span><br><span class="line">WeakReference&lt;Object&gt; wr=<span class="keyword">new</span> WeakReference&lt;Object&gt;(<span class="keyword">new</span> Object());</span><br><span class="line"><span class="comment">//虚引用</span></span><br><span class="line">Object obj=<span class="keyword">new</span> Object();</span><br><span class="line">ReferenceQueue&lt;Object&gt; rq=<span class="keyword">new</span> ReferenceQueue&lt;&gt;();</span><br><span class="line">PhantomReference&lt;Object&gt; pr=<span class="keyword">new</span> PhantomReference&lt;&gt;(obj,rq);</span><br></pre></td></tr></table></figure>
+
+<h3 id="评估性能指标"><a href="#评估性能指标" class="headerlink" title="评估性能指标"></a>评估性能指标</h3><ul>
+<li><strong>吞吐量</strong>：运行用户代码时间占总运行时间的比例。</li>
+<li>垃圾收集开销：吞吐量的补数，垃圾收集所用时间与总运行时间的比例。</li>
+<li><strong>暂停时间</strong>：执行垃圾收集时，程序的工作线程被暂停的时间。</li>
+<li>收集频率：相对于应用程序的执行，收集操作发生的频率。</li>
+<li>内存占用：Java堆区所占的内存大小。</li>
+<li>快速：一个对象从诞生到被回收所经历的时间。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/09/30/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          垃圾回收器
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/27/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">垃圾回收算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/web/">web</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/django/">django</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/web/http/">http</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/">mybatis入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/24/cors/">cors</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/22/android/">android</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 小象<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

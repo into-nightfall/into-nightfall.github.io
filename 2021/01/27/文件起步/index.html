@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>文件起步 | 小象のblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Linux文件信息-rw-r--r-- 1 bes bes  2625 Jan 27 11:11 _config.yml  第一栏表示文件类型和权限； 第一个字符代表该文件的类型，-表示文件，d表示目录，l表示链接文件（link），b表示区块文件（block），c表示字符设备文件（character），s表示数据接口文件（sockets），p表示数据输送档（FIFO,pipe）。 下来9个字符每三">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件起步">
+<meta property="og:url" content="https://xiaoxiangxiong.gitee.io/2021/01/27/%E6%96%87%E4%BB%B6%E8%B5%B7%E6%AD%A5/index.html">
+<meta property="og:site_name" content="小象のblog">
+<meta property="og:description" content="Linux文件信息-rw-r--r-- 1 bes bes  2625 Jan 27 11:11 _config.yml  第一栏表示文件类型和权限； 第一个字符代表该文件的类型，-表示文件，d表示目录，l表示链接文件（link），b表示区块文件（block），c表示字符设备文件（character），s表示数据接口文件（sockets），p表示数据输送档（FIFO,pipe）。 下来9个字符每三">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-27T03:17:28.000Z">
+<meta property="article:modified_time" content="2021-04-09T03:18:20.129Z">
+<meta property="article:author" content="小象">
+<meta property="article:tag" content="xiaoxiang,小象のblog">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="小象のblog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="mheader">
+    <div class="mtitle-wrap">
+        <a href="/" class="mtitle">小象のblog</a>
+		<a href="/archives/" class="msubtitle">概览</a>
+		<a href="http://xiaoxiang.space" target="_self" class="msubtitle">说点什么</a>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-文件起步" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/01/27/%E6%96%87%E4%BB%B6%E8%B5%B7%E6%AD%A5/" class="article-date">
+  <time datetime="2021-01-27T03:17:28.000Z" itemprop="datePublished">2021-01-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      文件起步
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Linux文件信息"><a href="#Linux文件信息" class="headerlink" title="Linux文件信息"></a>Linux文件信息</h3><p><code>-rw-r--r-- 1 bes bes  2625 Jan 27 11:11 _config.yml</code></p>
+<ul>
+<li>第一栏表示文件类型和权限；<ul>
+<li>第一个字符代表该文件的类型，-表示文件，d表示目录，l表示链接文件（link），b表示区块文件（block），c表示字符设备文件（character），s表示数据接口文件（sockets），p表示数据输送档（FIFO,pipe）。</li>
+<li>下来9个字符每三个为一组（r表示可读，w表示可写，x表示可执行，-表示无该权限）：<ul>
+<li>第一组表示文件拥有者可具备的权限；</li>
+<li>第二组表示加入此群组的账号的权限；</li>
+<li>第三组为非本人且没有加入本群组的其他账号的权限。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>第二栏表示有多少文件名链接到此节点（i-node）；</li>
+<li>第三栏表示该文件所属的用户，第四栏表示所属群组；</li>
+<li>第五栏表示容量大小，第六栏表示最近的修改时间，第七栏为文件名。</li>
+</ul>
+<h4 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h4><ul>
+<li>如果用户对一个目录只有只读权限，那么是无法进入此目录的，他必须持有执行权限。</li>
+<li>对目录有只读权限表示它可以查看该目录下的文件名数据（用ls+目录名）。</li>
+<li>root不受权限限制。</li>
+<li>文件的写权限指可以编辑文件，但不包含删除文件。</li>
+<li>能否删除文件由该文件上层目录的权限决定，当用户对该目录有写权限，那么他可以删除该目录下的文件和目录。</li>
+<li>umask：查看和设置文件权限。如002，表示user和group拥有全部权限，others拥有r和x权限。</li>
+<li>特殊权限（有些文件或目录会出现rws或rwt的情况，这就是特殊权限。注意：当S或者T为大写的时候，表示无效，因为使用者没有该程序的执行权限）<ul>
+<li>SUID（s）：只对二进制文件（可执行的程序）有效；执行者要对该程序具有x的权限；在执行该程序时，执行者将短暂获得该程序拥有者（比如root）的权限。</li>
+<li>SGID（s）：可以针对二进制文件或目录来设置。对二进制文件：执行者要对该程序具有x的权限，在执行该程序时，执行者将获得该程序所在群组的支持。对目录：代表使用者在这个目录下面新建的文件的文件群组都会与该目录的群组名称相同。</li>
+<li>SBIT（t）：只针对目录有效，当使用者对该目录有w和x权限，只有自己和root才能删掉自己创建的文件或目录。</li>
+<li>权限和数字存在对应，SUID为4，SGID为2，SBIT为1。</li>
+</ul>
+</li>
+</ul>
+<h3 id="查看文件内容"><a href="#查看文件内容" class="headerlink" title="查看文件内容"></a>查看文件内容</h3><ul>
+<li>cat：从第一行开始显示文件内容</li>
+<li>tac：从最后一行开始显示</li>
+<li>nl：显示的时候输出行号</li>
+<li>more：一页一页的显示文件内容</li>
+<li>less：与more类似，但是可以往前翻<ul>
+<li><code>/srting</code>，向下搜索string</li>
+<li><code>?string</code>，向上搜索string</li>
+</ul>
+</li>
+<li>head：只看头几行<ul>
+<li>默认是显示10行</li>
+<li><code>head -n -100 filename</code>文件后面100行不显示</li>
+</ul>
+</li>
+<li>tail：只看尾几行<ul>
+<li>默认是显示10行</li>
+<li><code>tail -n +100 filename</code>文件后面100行以后都会被列出来</li>
+</ul>
+</li>
+<li>od：以二进制查看</li>
+<li>file：查看文件类型</li>
+</ul>
+<h3 id="查找文件"><a href="#查找文件" class="headerlink" title="查找文件"></a>查找文件</h3><ul>
+<li>whereis：针对几个特定目录查找文件，<code>whereis -l</code>查看这几个特定目录。</li>
+<li>which：根据PATH查看可执行文件。</li>
+<li>locate：根据/var/lib/mlocate内的数据库记载搜索文件（数据库未更新前搜索某新建的文件可能搜不到）。</li>
+<li>find：强大的查询工具。用法<code>find [PATH] [option] [action]</code>，PATH可以是多个目录，find查找会进入子目录。<ul>
+<li>查看/home下3天前到4天前中间的24小时内有修改的文件<code>find /home -mtime 3</code>（如果是+3表示大于等于3天前的文件名，-3表示小于等于3天内的文件名）；</li>
+<li>查看/home下属于bes的文件<code>find /home -user bes</code>，查看不属于任何人的文件<code>find / -nouser</code>；</li>
+<li>查到/home下文件名包含了passwd的文件名<code>find /home -name &quot;*passwd*&quot;</code>;</li>
+<li>查看/home下文件类型为普通文件的文件名<code>find /home -type f</code>;</li>
+<li>查看文件权限大于755的文件名<code>find -perm /755</code>；</li>
+<li><code>find / -perm /7000 -exec ls -l &#123;&#125; \;</code>其中{}表示find找到的内容会放到{}中；-exec到;是关键字，表示开始和结束。</li>
+<li>find查找会直接去查找磁盘，可能比较慢。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/01/28/git%E8%B5%B7%E6%AD%A5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          git起步
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/01/27/%E5%B8%B8%E9%87%8F%E6%B1%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">常量池</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/web/">web</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/django/">django</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/web/http/">http</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/">mybatis入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/24/cors/">cors</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/22/android/">android</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 小象<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>小象のblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="记录学习笔记">
+<meta property="og:type" content="website">
+<meta property="og:title" content="小象のblog">
+<meta property="og:url" content="https://xiaoxiangxiong.gitee.io/page/2/index.html">
+<meta property="og:site_name" content="小象のblog">
+<meta property="og:description" content="记录学习笔记">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="小象">
+<meta property="article:tag" content="xiaoxiang,小象のblog">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="小象のblog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="mheader">
+    <div class="mtitle-wrap">
+        <a href="/" class="mtitle">小象のblog</a>
+		<a href="/archives/" class="msubtitle">概览</a>
+		<a href="http://xiaoxiang.space" target="_self" class="msubtitle">说点什么</a>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-python面向对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/14/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" class="article-date">
+  <time datetime="2021-03-14T07:39:50.000Z" itemprop="datePublished">2021-03-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/14/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">python面向对象</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>python中所有数据类型都可视为对象。</li>
+<li>所有的类都会继承object类。</li>
+<li>类中定义函数的第一个参数是self，调用时不用传递该参数。</li>
+<li>属性前面加<code>__</code>（两个下划线）就变成了一个私有属性。双下划线开头，双下划线结尾的是特殊变量，特殊变量是可以直接访问的，不是private变量。一个下划线开头的变量名是可以被外部访问的，但是按约定俗称的规定，请把它视为私有变量。</li>
+<li>双下划线开头的属性不能被外部访问是因为这个属性被改名字了。</li>
+<li>判断一个变量是否是某个类型可以用isinstance()判断，判断对象类型可以使用type方法。</li>
+<li>使用dir()可获得对象的所有属性和方法。</li>
+<li>自己写的类如果也想用len()方法的话，可以自己写一个<code>__len__</code>方法。实际上，当我们使用len()方法的时候，它会自动去调用该对象的<code>__len__()</code>方法。</li>
+<li><code>__str__</code>相当于java中的<code>toString</code>，还有一个<code>__repr__</code>是返回开发者看到的字符串。</li>
+<li><code>__getitem__</code>可按下标访问数据的项。</li>
+<li>任何类只要定义一个<code>__call__</code>方法，就可以对实例进行调用。</li>
+</ul>
+<h2 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment">#类属性</span></span><br><span class="line">    name = <span class="string">&#x27;Student&#x27;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="comment">#实例属性</span></span><br><span class="line">        self.name = name</span><br><span class="line"><span class="comment">#编写程序不要对实例属性和类属性使用相同的名字，因为相同名称的实例属性将屏蔽掉类属性        </span></span><br></pre></td></tr></table></figure>
+
+<h2 id="动态绑定"><a href="#动态绑定" class="headerlink" title="动态绑定"></a>动态绑定</h2><ul>
+<li>当创建了一个对象后，我们可以给该对象绑定任何属性和方法，但是该属性和方法只在当前对象上有效。为了给所有实例都绑定方法，可以给class绑定方法。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="comment">#可以用来限制class实例能添加的属性，仅对当前类实例起作用，对继承的子类不起作用</span></span><br><span class="line">    <span class="comment">#除非在子类中也定义__slots__，这样子类实例允许定义的属性就是自身的__slots__加上父类的__slots__</span></span><br><span class="line">    __slots__ = (<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;age&#x27;</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_age</span>(<span class="params">self, age</span>)</span></span><br><span class="line">    self.age = age</span><br><span class="line">s = Student()</span><br><span class="line"><span class="comment">#给对象动态绑定了一个属性</span></span><br><span class="line">s.name = <span class="string">&#x27;xiaoxiang&#x27;</span></span><br><span class="line"><span class="comment">#给对象动态绑定一个方法，只在该对象上有效</span></span><br><span class="line">s.set_age = MethodType(set_age, s)</span><br><span class="line"><span class="comment">#给类动态绑定一个方法</span></span><br><span class="line">Student.set_age = set_age</span><br></pre></td></tr></table></figure>
+
+<h2 id="getter和setter"><a href="#getter和setter" class="headerlink" title="getter和setter"></a>getter和setter</h2><ul>
+<li>使用@property代替getter，以及创建setter的方法见下面的代码</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">name</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self._name</span><br><span class="line"></span><br><span class="line"><span class="meta">    @name.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">name</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        self._name = name</span><br><span class="line"></span><br><span class="line">student = Student()</span><br><span class="line">student.name = <span class="string">&#x27;xiaoxiang&#x27;</span></span><br><span class="line">print(student.name)</span><br></pre></td></tr></table></figure>
+
+<h2 id="iter-和-next"><a href="#iter-和-next" class="headerlink" title="__iter__和__next__"></a><code>__iter__</code>和<code>__next__</code></h2><ul>
+<li>如果一个类想被用于for-in，就必须实现<code>__iter__</code>和<code>__next__</code>方法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fib</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.a = <span class="number">0</span></span><br><span class="line">        self.b = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment">#实例自身就是迭代对象</span></span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__next__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.a, self.b = self.b, self.b + self.a</span><br><span class="line">        <span class="keyword">if</span> self.a &gt; <span class="number">100</span>:</span><br><span class="line">            <span class="keyword">raise</span> StopIteration()</span><br><span class="line">        <span class="comment">#返回下一个值</span></span><br><span class="line">        <span class="keyword">return</span> self.a</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> Fib():</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
+
+<h2 id="getattr"><a href="#getattr" class="headerlink" title="__getattr__"></a><code>__getattr__</code></h2><ul>
+<li><code>__getattr__</code>用于动态返回一个属性，只在没有找到属性的情况下才会调用该方法。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Url</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, item = <span class="string">&#x27;&#x27;</span></span>):</span></span><br><span class="line">        self.item = item</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getattr__</span>(<span class="params">self, item</span>):</span></span><br><span class="line">        <span class="keyword">return</span> Url(<span class="string">&#x27;%s/%s&#x27;</span>%(self.item, item))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.item</span><br><span class="line"></span><br><span class="line">    __repr__ = __str__</span><br><span class="line"></span><br><span class="line">print(Url().xiaoxiang.ayu.liuchan.list)</span><br><span class="line"><span class="comment">#结果：/xiaoxiang/ayu/liuchan/list</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> enum <span class="keyword">import</span> Enum, unique</span><br><span class="line"></span><br><span class="line"><span class="comment">#该注解用于保证没有重复值</span></span><br><span class="line"><span class="meta">@unique</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Weekday</span>(<span class="params">Enum</span>):</span></span><br><span class="line">    Sun = <span class="number">0</span> <span class="comment"># Sun的value被设定为0</span></span><br><span class="line">    Mon = <span class="number">1</span></span><br><span class="line">    Tue = <span class="number">2</span></span><br><span class="line">    Wed = <span class="number">3</span></span><br><span class="line">    Thu = <span class="number">4</span></span><br><span class="line">    Fri = <span class="number">5</span></span><br><span class="line">    Sat = <span class="number">6</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="type和metaclass"><a href="#type和metaclass" class="headerlink" title="type和metaclass"></a>type和metaclass</h2><ul>
+<li>class（类）的类型就是type，对象的类型就是类名</li>
+<li>可以通过type()函数依次传入3个参数来创建一个class对象：①class的名称；②继承的父类集合；③class的方法名称与函数绑定。<code>type(&#39;hello&#39;, (object, ), dict(hello = &#39;hello world&#39;))</code></li>
+<li>通过type()函数创建的类和直接写class是完全一样的，因为python解释器遇到class定义时，仅仅是扫描一下class定义的语法，然后调用type()函数创建出class。</li>
+<li>可以把类看作是metaclass（元类）创建出来的实例。</li>
+<li>metaclass后面用到了再来看吧，链接在这-&gt;<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017592449371072">metaclass</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-clickhouse-statement" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/11/clickhouse-statement/" class="article-date">
+  <time datetime="2021-03-11T09:01:03.000Z" itemprop="datePublished">2021-03-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>►<a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/11/clickhouse-statement/">clickhouse-statement</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>可以在system.data_type_families中检查某个数据类型的名称是否大小写敏感，case_insensitive=1表示大小写不敏感。看完后我建议数据类型的命名首字母大写，并采用驼峰命名法。</li>
+<li>除了标准sql的关键字和许多其他数据库实现的一些关键字，clickhouse其他的关键字都是大小写敏感的！所以如果你发现语句看上去没错，执行就是有问题，看看是不是大小写出问题了。</li>
+<li>关键字不是保留的，它们仅在相应的上下文中才会被处理。</li>
+<li>变量名可以使用反引号包含起来。</li>
+<li>别名在查询和子查询中是全局可见的。</li>
+</ul>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><ul>
+<li><p>select子句是在 from、where、group by等所有操作完成后计算的，如果select子句中包含聚集函数，<strong>clickhouse会在执行group by期间处理这些聚集函数</strong>。</p>
+</li>
+<li><p>如果要用re2正则表达式匹配列，可以使用COLUMNS（‘xxx’），这样可以一次匹配多个列（对于是否常用我持否定态度）。</p>
+</li>
+<li><p>当FROM被省略时，数据从system.one表中读取</p>
+</li>
+<li><p>ARRAY JOIN</p>
+<ul>
+<li>对于包含数组列的表来说是一种常见的操作，用于生成一个新表（新表有一列将包含数组中的每一个元素，其他列可能会出现元素重复）。</li>
+</ul>
+</li>
+<li><p>DISTINCT</p>
+<ul>
+<li>不支持select包含有数组的列</li>
+<li>当ORDER BY 被省略且LIMIT被定义时，在读取所需数量的不同行后立即停止运行。</li>
+<li>DISTINCT在ORDER BY之前执行</li>
+</ul>
+</li>
+</ul>
+<h3 id="alter"><a href="#alter" class="headerlink" title="alter"></a>alter</h3><ul>
+<li>仅支持MergeTree家族，Merge以及Distributed等引擎表。</li>
+<li>alter操作会阻塞对表的所有读写操作。</li>
+</ul>
+<h4 id="列操作"><a href="#列操作" class="headerlink" title="列操作"></a>列操作</h4><ul>
+<li>增加列<ul>
+<li><code>ADD COLUMN [IF NOT EXISTS] name [type]  [default_expr] [codec] [AFTER name_after]</code></li>
+<li>使用指定的name、type、codec以及default_expr往表中增加新的列。</li>
+<li>如果sql中包含IF NOT EXISTS，执行语句如果已存在，则clickhouse不会报错，不能将新的列添加到表的开始位置，当指定了AFTER name_after，则会将新的列添加到指定列的后面。</li>
+<li>添加列仅仅是改变原有表的结构，不会对已有数据产生影响。</li>
+</ul>
+</li>
+<li>删除列<ul>
+<li><code>DROP COLUMN [IF EXISTS] name</code></li>
+</ul>
+</li>
+<li>清空列<ul>
+<li><code>CLEAR COLUMN [IF EXISTS] name IN PARTITION partition_name</code></li>
+<li>重置指定分区中的值。</li>
+</ul>
+</li>
+<li>增加注释<ul>
+<li><code>COMMENT COLUMN [IF EXISTS] name &#39;comment&#39;</code></li>
+<li>每个列都可以包含注释，注释信息在DESCRIBE table中查看</li>
+</ul>
+</li>
+<li>改变列的值类型，默认表达式，TTL<ul>
+<li><code>MODIFY COLUMN [IF EXISTS] name [type] [default_expr] [TTL] </code></li>
+<li>当改变列的类型时，列的值也被转换了，如同对列使用toType函数一样，执行起来要花费很长时间。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-clickhouse起步" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/11/clickhouse%E8%B5%B7%E6%AD%A5/" class="article-date">
+  <time datetime="2021-03-11T02:00:32.000Z" itemprop="datePublished">2021-03-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>►<a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/11/clickhouse%E8%B5%B7%E6%AD%A5/">clickhouse起步</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>online analytical processing of queries（OLAP）：联机分析</li>
+<li>clickhouse是一个用于OLAP的列式数据库管理系统（来自同一列的数据被存储在一起）。</li>
+<li><code>sudo service clickhouse-server start</code>启动clickhouse.</li>
+<li>clickhouse不要求主键唯一</li>
+</ul>
+<h3 id="clickhouse连接客户端"><a href="#clickhouse连接客户端" class="headerlink" title="clickhouse连接客户端"></a>clickhouse连接客户端</h3><h4 id="clickhouse-client"><a href="#clickhouse-client" class="headerlink" title="clickhouse-client"></a>clickhouse-client</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://clickhouse.tech/docs/zh/interfaces/cli/#command-line-options">clickhouse-client命令行参数</a></li>
+<li><code>clickhouse-client</code>配置文件地址（使用以下第一个配置文件）<ul>
+<li>通过<code>--config-file</code>参数指定</li>
+<li><code>./clickhouse-client.xml</code></li>
+<li><code>~/.clickhouse-client/config.xml</code></li>
+<li><code>/etc/clickhouse-server/config.xml</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h4><ul>
+<li>可以通过mysql命令工具连接，需要在配置文件中配置mysql_port：<code>&lt;mysql_port&gt;9004&lt;/mysql_port&gt;</code></li>
+<li>使用命令行工具mysql进行连接：<code>mysql --protocol tcp -u default -P 9004</code></li>
+</ul>
+<h3 id="数据库引擎"><a href="#数据库引擎" class="headerlink" title="数据库引擎"></a>数据库引擎</h3><h4 id="mysql引擎"><a href="#mysql引擎" class="headerlink" title="mysql引擎"></a>mysql引擎</h4><ul>
+<li><p>用于将远程的mysql服务器中的表映射到clickhouse中，并允许对表进行insert和select查询等，但无法执行rename、create table、alter操作。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> [<span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span>] db_name [<span class="keyword">ON</span> CLUSTER cluster] <span class="keyword">ENGINE</span> = MYSQL(<span class="string">&#x27;host:port&#x27;</span>,[<span class="string">&#x27;database&#x27;</span>| <span class="keyword">database</span>],<span class="string">&#x27;user&#x27;</span>,<span class="string">&#x27;password&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://clickhouse.tech/docs/en/engines/database-engines/mysql/#data_types-support">类型的对应</a>，其他的mysql数据类型全部转化为字符串</p>
+</li>
+</ul>
+<h3 id="表引擎"><a href="#表引擎" class="headerlink" title="表引擎"></a>表引擎</h3><h4 id="merge-tree"><a href="#merge-tree" class="headerlink" title="merge tree"></a>merge tree</h4><ul>
+<li><p>MergeTree：设计用于插入大量数据当一张表当中。数据可以以数据片段的形式一个接一个的快速写入，数据片段在后台按照一定的规则进行合并。</p>
+</li>
+<li><p>SummingMergeTree：合并SummingMergeTree表的数据片断时，clickhouse会把所有具有<strong>相同主键的行合并为一行</strong>，该行包含了被合并的行中具有数值数据类型的列的汇总值。如果主键的组合方式使得单个键值对应于大量的行，则可以显著的减少存储空间并加快数据查询的速度。</p>
+</li>
+<li><p>ReplacingMergeTree：该引擎会<strong>删除排序键值相同</strong>的重复项。适用于在后台清除重复的数据以节省空间，但不保证没有重复数据出现。在数据合并的时候，如果制定了Replcaing的参数，当参数未指定，则保留最后一条数据，当参数已指定，则保留ver值最大的版本。数据的去重只会在数据的合并期间进行，所以常常今天数据重复了，明天看数据还没有被去重。</p>
+</li>
+<li><p>AggregateMergeTree：改变了数据片段的合并逻辑。clickhouse会将一个数据片段内所有具有相同主键的行替换为一行，这一行会存储一系列聚合函数的状态。可以使用AggregatingMergeTree表来做增量数据的聚合统计，包括物化视图的数据聚合。</p>
+</li>
+<li><p>CollapsingMergeTree：会异步的删除掉所有字段的值都相等（除了列Sign，该列一个为1，一个为-1）的成对的行，下面这两行就会被删除。</p>
+<ul>
+<li><table>
+<thead>
+<tr>
+<th>UserId</th>
+<th>PageViews</th>
+<th>Duration</th>
+<th>Sign</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>123</td>
+<td>5</td>
+<td>146</td>
+<td>1</td>
+</tr>
+<tr>
+<td>123</td>
+<td>5</td>
+<td>146</td>
+<td>-1</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>1是状态行，-1是状态取消行</p>
+</li>
+</ul>
+</li>
+<li><p>VersionedCollapsingMergeTree：用于相同目的的折叠树但使用了不同的折叠算法，允许以多个线程的任何顺序插入数据。Version列有助于正确折叠行，即使他们以错误的顺序插入。而CollapsingMergeTree只允许严格的连续插入。</p>
+</li>
+</ul>
+<h5 id="MergeTree"><a href="#MergeTree" class="headerlink" title="MergeTree"></a>MergeTree</h5><ul>
+<li><p>数据可以以数据片段的形式一个接一个的快速写入，数据片段在后台按照一定的规则进行合并。</p>
+</li>
+<li><p>存储的数据按主键排序；支持数据分区（如果指定分区键的话）；支持数据副本；支持数据采样。</p>
+</li>
+<li><p>建表（<a target="_blank" rel="noopener" href="https://clickhouse.tech/docs/zh/engines/table-engines/mergetree-family/mergetree/#table_engine-mergetree-creating-a-table">更多介绍看这里</a>）</p>
+<ul>
+<li><pre><code class="sql">CREATE TABLE [IF NOT EXISTS] [db.]table_name [ON CLUSTER cluster]
+(
+    name [type1] [DEFAULT|MATERIALIZED|ALIAS expr1] [TTL expr1],
+    name [type2] [DEFAULT|MATERIALIZED|ALIAS expr2] [TTL expr2]
+    ...
+    INDEX index_name1 expr1 TYPE type1(...) GRANULARITY value1,
+    INDEX index_name2 expr2 TYPE type2(...) GRANULARITY value2
+) ENGINE = MergeTree()
+ORDER BY expr
+[PARTITION BY expr]
+[PRIMARY KEY expr]
+[SAMPLE BY expr]
+[TTL expr [DELETE|TO DISK &#39;xxx&#39;|to volume &#39;xxx&#39;],...]
+[SETTINGS name=value,..]</code></pre>
+</li>
+<li><p>ENGINE：引擎名和参数</p>
+</li>
+<li><p>ORDER BY：排序键，可以是一组列的元组或任意的表达式。<strong>如果没有用PRIMARY KEY显式指定主键，clickhouse会使用排序键作为主键</strong>，如果不需要排序，可以使用ORDER BY tuple()</p>
+</li>
+<li><p>PARTITION BY：分区键，要按月分区，可以使用表达式toYYYYMM(date_column)，这里date_column是一个Date类型的列，分区的格式会是YYYYMM</p>
+</li>
+<li><p>PRIMARY KEY：主键，如果要选择与排序键不同的主键，可选。大部分时间不需要再专门指定一个primary key</p>
+</li>
+<li><p>SIMPLE BY：用于抽样表达式，如果要用抽样表达式，主键中必须包含这个表达式。如<code>SAMPLE BY intHash32(UserID) ORDER BY (CounterID, EventDate, intHash32(UserID))</code></p>
+</li>
+<li><p>TTL：可以为表设置，也可以为每个列单独设置</p>
+<ul>
+<li>表TTL：表可以设置一个用于移除过期行的表达式，当表中的行过期时，clickhouse会删除所有对应的行。clickhouse在数据片段合并的时候会删除掉过期的数据，如果在合并的过程中执行SELECT查询，则可能得到过期的数据。</li>
+</ul>
+</li>
+<li><p>SETTINGS：控制MergeTree行为的额外参数</p>
+<ul>
+<li>index_granularity：索引力度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>数据存储</p>
+<ul>
+<li>表由按主键排序的数据片段组成。</li>
+<li>当数据被插入到表中时，会创建多个数据片段并按主键的字典排序。</li>
+<li>不同分区的数据会被分成不同的片段，clickhouse在后台合并数据片段以便更高效存储。合并机制不保证具有相同主键的行全部合并到同一个数据片中。</li>
+<li>数据片段以wide或compact格式存储。wide格式下，每一列都会在文件系统中存储为单独的文件，compact模式下所有列都存储在同一个文件下。</li>
+<li>每个数据片段被逻辑分割成颗粒。颗粒是进行数据查询时最小的不可分割数据集。每个颗粒都包含整数个行。</li>
+</ul>
+</li>
+<li><p>可以使用ORDER BY tuple()创建没有主键的表，这种情况下，clickhouse会根据数据插入的顺序存储。</p>
+</li>
+<li><p>对于select查询，如果where子句中有下面这些表达式，就可以使用索引</p>
+<ul>
+<li>包含一个与主键/分区键中的部分字段或全部字段相等或不等的表达式。</li>
+<li>主键/分区键 in (xxx,xxx,xxx) 或者 主键/分区键 like ‘xxx’。</li>
+<li>基于主键/分区键的字段上的某些函数。</li>
+<li>基于主键/分区键的表达式的逻辑表达式。</li>
+</ul>
+</li>
+<li><p>TTL</p>
+<ul>
+<li>TTL表达式的计算结果必须是日期或日期时间类型的字段</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://clickhouse.tech/docs/zh/engines/table-engines/mergetree-family/mergetree/">MergeTree</a>这一块越看越迷惑，之后再来接着看吧。</p>
+<h4 id="日志引擎"><a href="#日志引擎" class="headerlink" title="日志引擎"></a>日志引擎</h4><ul>
+<li>是为了需要写入许多小数据量（少于一百万行）的表的场景而开发的。</li>
+</ul>
+<h5 id="该引擎的共同属性"><a href="#该引擎的共同属性" class="headerlink" title="该引擎的共同属性"></a>该引擎的共同属性</h5><ol>
+<li>写入时将数据追加到文件末尾。</li>
+<li>不支持索引。</li>
+<li>非原子地写入数据。</li>
+</ol>
+<ul>
+<li>Log和StripeLog支持并行读取数据，Log引擎将表中的每一列使用不同的文件；StripeLog将所有的数据存储到一个文件中</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python起步" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/11/python%E8%B5%B7%E6%AD%A5/" class="article-date">
+  <time datetime="2021-03-11T01:27:54.000Z" itemprop="datePublished">2021-03-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/11/python%E8%B5%B7%E6%AD%A5/">python起步</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="python基础"><a href="#python基础" class="headerlink" title="python基础"></a>python基础</h2><h3 id="数据类型和变量"><a href="#数据类型和变量" class="headerlink" title="数据类型和变量"></a>数据类型和变量</h3><ul>
+<li>整数：可以是任意大小</li>
+<li>浮点数：除了小数外还可以用科学计数法：1.23e9</li>
+<li>字符串：以<code>&quot;</code>或<code>&#39;</code>括起来的文本，python允许使用<code>r&#39;&#39;</code>表示引号内部的字符串默认不转义，python允许用<code>&#39;&#39;&#39;...&#39;&#39;&#39;</code>的格式表示多行内容</li>
+<li>布尔值：<code>True</code>或<code>False</code>，可以进行<code>and</code> <code>or</code> <code>not</code>运算</li>
+<li>空值：<code>None</code>，不等于0</li>
+<li>列表list：如<code>classmate=[&#39;xiaoming&#39;,&#39;lihua&#39;,123,True]</code>，list是一个可变的有序表。<ul>
+<li>可以使用append函数追加到末尾</li>
+<li>可以使用insert（i，参数）插入到指定位置</li>
+<li>删除末尾元素使用pop（），删除指定位置元素用pop（i）</li>
+</ul>
+</li>
+<li>元组tuple：<code>classmate=(&#39;xiaoming&#39;,&#39;lihua&#39;,123,True)</code>，一旦初始化就不能修改<ul>
+<li>当只有一个元素要这么定义：<code>classmate=(&#39;hel&#39;,)</code></li>
+</ul>
+</li>
+<li>字典dict：<code>d = &#123;&#39;Michael&#39;: 95, &#39;Bob&#39;: 75, &#39;Tracy&#39;: 85&#125;</code>键值对<ul>
+<li>可以通过get(key)或d[key]获取值</li>
+<li>可以通过d[key]=xxx直接赋值</li>
+<li>可以通过pop(key)删除键值对</li>
+<li>可以通过in判断key是否存在</li>
+<li>key必须是不可变对象</li>
+</ul>
+</li>
+<li>set：要创建一个set，需要一个list作为输入集合，<ul>
+<li>set是一组key的集合，无序，不重复。</li>
+<li>add(xxx)可以向set里面加元素，remove(xxx)可以删除元素</li>
+</ul>
+</li>
+<li>变量：可以把任意类型数据赋值给同一个变量（不同类型也可以）</li>
+<li>常量：用全大写的变量名表示常量是一个习惯上的用法。</li>
+<li>除法：python中有两种除法，一种是<code>/</code>：计算结果是浮点数，一种是<code> //</code>：计算结果是整数（这种称为地板除），python还提供了余数运算：<code>%</code></li>
+</ul>
+<h3 id="字符串和编码"><a href="#字符串和编码" class="headerlink" title="字符串和编码"></a>字符串和编码</h3><ul>
+<li>在计算机内存中，统一使用unicode编码，当需要保存到硬盘或者传输的时候，就会转化为UTF-8编码</li>
+<li>用记事本编辑时，从文件中读取的UTF-8会被转化为Unicode字符到内存中</li>
+<li>python3字符串是以unicode编码的，可以通过<code>ord()</code>获取字符串的整数表示，<code>chr()</code>把编码转换为对应的字符</li>
+<li>当这么写时-&gt;<code>b&#39;ABC&#39;</code>表示bytes类型，每个字符只占一个字节。</li>
+<li>以Unicode表示的字符串通过ecnode()方法可以编码位指定的bytes，如<code>&#39;中文&#39;.encode(&#39;utf-8&#39;)</code></li>
+<li><code>len(&#39;xxx&#39;)</code>可以知道包含了几个字符。</li>
+</ul>
+<h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><h4 id="选择结构-非0，非空字符串、非空list就表示True"><a href="#选择结构-非0，非空字符串、非空list就表示True" class="headerlink" title="选择结构:非0，非空字符串、非空list就表示True"></a>选择结构:非0，非空字符串、非空list就表示True</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">3</span></span><br><span class="line"><span class="keyword">if</span> age &gt;= <span class="number">18</span>:</span><br><span class="line">    print(<span class="string">&#x27;adult&#x27;</span>)</span><br><span class="line"><span class="keyword">elif</span> age &gt;= <span class="number">6</span>:</span><br><span class="line">    print(<span class="string">&#x27;teenager&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">&#x27;kid&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="循环结构"><a href="#循环结构" class="headerlink" title="循环结构"></a>循环结构</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sum = <span class="number">0</span></span><br><span class="line"><span class="comment">#0~100</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">101</span>):</span><br><span class="line">    sum = sum + x</span><br><span class="line">print(sum)</span><br><span class="line"></span><br><span class="line">sum = <span class="number">0</span></span><br><span class="line">n = <span class="number">99</span></span><br><span class="line"><span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">    sum = sum + n</span><br><span class="line">    n = n - <span class="number">2</span></span><br><span class="line">print(sum)</span><br><span class="line"><span class="comment">#break和continue也有</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><ul>
+<li>python内置了很多函数，可以直接调用，如print、input、len、max、int、float、str、bool等</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_abs</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">if</span> x &gt;= <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> -x</span><br><span class="line">    </span><br><span class="line"><span class="comment">#空函数，pass也可用在其他地方，如if里面</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nop</span>():</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以返回多个值，会转化成tuple</li>
+<li>函数参数中可以设置默认参数，必选参数必须放在默认参数前面</li>
+<li>可以不按顺序提供部分默认参数，但要把参数名写上</li>
+<li>定义可变参数是在参数前面增加一个*，如<code>def calc(*numbers)</code><ul>
+<li>当已经有了list或tuple，要调用一个可变参数，可以<code>calc(*nums)</code></li>
+</ul>
+</li>
+<li>关键字参数：<code>def person(name, age, **kw):</code>会在函数内部自动组装成一个dict<ul>
+<li>可以传入多个键值对，也可以传入一个dict（<code>person(&#39;Jack&#39;, 24, **extra)</code>）</li>
+</ul>
+</li>
+<li>命名关键字参数：<code>def person(name, age, *, city, job):</code><ul>
+<li>调用方式<code>person(&#39;Jack&#39;, 24, city=&#39;Beijing&#39;, job=&#39;Engineer&#39;)</code></li>
+<li>命名关键字参数必须传入参数名</li>
+</ul>
+</li>
+<li>上面这些都可以组合</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>切片：<code>L[:2]</code>切出下标为0和1的元素</li>
+<li>for in可用来迭代，判断是否可迭代可以用collections的Iterable类型判断。<ul>
+<li><code>isinstance(&#39;abc&#39;,Iterable)</code></li>
+</ul>
+</li>
+<li>range(1:10)可用来生成1到9</li>
+<li>列表生成器<code>[x*x for x in range(1,11) if x%2==0]</code></li>
+<li>赋值语句<code>a, b = b, a</code>是通过tuple实现的，相当于<code>t = (b, a) a = t[0] b = t[1]</code></li>
+<li>凡是可以作用于for循环的对象都是Iterable类型，凡是可作用于next()函数的对象都是Iterator类型</li>
+<li>函数也是一个对象，函数对象可以赋值给变量。</li>
+<li>任何代码的第一个字符串都被视为模块的文档注释，<code>__author__</code>变量可以把作者写进去</li>
+<li>导入模块<code>import sys</code>，sys的argv变量用list存储了命令行的所有参数，argv的第一个参数是py文件的名称</li>
+<li>类似<code>__xxx__</code>的变量是特殊变量，类似<code>_xxx_</code>和<code>_xxx</code>的变量是非公开变量（private）。</li>
+<li>命名类用UpperCamelCase（第一个字母大写，后面采用驼峰命名法），命名函数和方法采用lowercase_with_underscores（小写带下划线），</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-html" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/02/html/" class="article-date">
+  <time datetime="2021-03-02T12:22:15.000Z" itemprop="datePublished">2021-03-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/web/">web</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/02/html/">html</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="head"><a href="#head" class="headerlink" title="head"></a>head</h2><ul>
+<li><p><code>&lt;meta&gt;</code>:元数据就是描述数据的地方</p>
+<ul>
+<li><p><code>&lt;meta charset=&quot;utf-8&quot;&gt;</code>：指定文档中字符的编码。</p>
+</li>
+<li><p>添加作者描述和该网页的描述，这些数据会被搜索引擎解析。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;author&quot;</span> <span class="attr">content</span>=<span class="string">&quot;xiaoxiang&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span> <span class="attr">content</span>=<span class="string">&quot;A learning notes,about java,git,etc&quot;</span></span></span><br></pre></td></tr></table></figure>
+<p><code>&lt;meta name=&quot;keywords&quot; content=&quot;xxx&quot;&gt;</code>：keywords关键字已不再使用了。因为该关键字是提供给搜索引擎，搜索引擎根据不同的关键字找到相关网站，但是有些网站填充了大量的关键字到keyword，错误的引导了搜索结果。</p>
+</li>
+</ul>
+</li>
+<li><p><code>&lt;link rel=&quot;shortcut icon&quot;  href=&quot;favicon.ico&quot;&gt;</code>：添加网页图标</p>
+</li>
+<li><p><code>&lt;link rel=&quot;stylesheet&quot;  href=&quot;index.css&quot;&gt;</code>：添加样式表</p>
+</li>
+<li><p><code>&lt;html lang=&quot;zh-CN&quot;&gt;</code>：为站点设置语言，如果该项设置了，网站就会被搜索引擎更好的索引（如允许他在不同的语言中正确显示）。也可在在其他标签中设置该属性<code>&lt;span lang=&quot;en&quot;&gt;小象&lt;/span&gt;</code>。</p>
+</li>
+</ul>
+<h2 id="body"><a href="#body" class="headerlink" title="body"></a>body</h2><ul>
+<li><code>&lt;em&gt;</code>：emphasis斜体显示。</li>
+<li><code>&lt;a href=&quot;mailto:example@example.com,exp@exp.com?cc=exp2@exp2.com&amp;subject=hello&amp;body=hi&quot;&gt;向example和exp发邮件&lt;/a&gt;</code>当点击一个链接或按钮时，打开一个新的电子邮件发送信息而不是连接到一个资源（邮件地址可为空，表示打开电子邮件）,cc表示抄送，subject表示主题，body表示主体，每个字段的值必须是URL编码的，即不能有非打印字符，中文要转意成%xx的形式。</li>
+<li>列表<ul>
+<li><code>&lt;ol&gt;</code>:ordered list</li>
+<li><code>&lt;ul&gt;</code>:unordered list</li>
+<li><code>&lt;dl&gt;</code>:description list</li>
+<li><code>&lt;li&gt;</code>:list item</li>
+<li><code>&lt;dt&gt;</code>:description term</li>
+<li><code>&lt;dd&gt;</code>definition description</li>
+</ul>
+</li>
+<li><code>&lt;abbr&gt;</code>:Abbreviation缩写    例：<span>我们使用<abbr title="超文本标记语言（Hyper text Markup Language）">HTML</abbr>来组织文档。</span></li>
+<li><code>&lt;address&gt;</code>：标记联系方式的元素。</li>
+<li><code>&lt;code&gt; &lt;pre&gt; &lt;var&gt; &lt;kbd&gt; &lt;samp&gt;</code>：用于展示计算机代码。</li>
+<li><code>&lt;time datetime=&quot;2021-03-10&quot;&gt;2021年3月10日&lt;/time&gt;</code>：标记时间，可供机器识别格式。</li>
+<li>一个block形式展现的块级元素不会被嵌套进内联元素中，但可以嵌套在其他块级元素中。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure">https://developer.mozilla.org/zh-CN/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-HTTP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/02/28/HTTP/" class="article-date">
+  <time datetime="2021-02-28T05:44:27.000Z" itemprop="datePublished">2021-02-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/web/">web</a>►<a class="article-category-link" href="/categories/web/http/">http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/28/HTTP/">http</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="HTTP概述"><a href="#HTTP概述" class="headerlink" title="HTTP概述"></a>HTTP概述</h2><ul>
+<li>HTTP是一种client-server协议，由客户端发出的消息叫request，被服务端响应的消息叫response。</li>
+</ul>
+<h3 id="HTTP能控制什么"><a href="#HTTP能控制什么" class="headerlink" title="HTTP能控制什么"></a>HTTP能控制什么</h3><h4 id="一、缓存"><a href="#一、缓存" class="headerlink" title="一、缓存"></a>一、缓存</h4><ul>
+<li>常见的HTTP缓存只能存储GET响应。缓存的关键主要包括request method和目标url。</li>
+</ul>
+<h5 id="缓存控制-HTTP-1-1定义的Cache-Control"><a href="#缓存控制-HTTP-1-1定义的Cache-Control" class="headerlink" title="缓存控制(HTTP/1.1定义的Cache-Control)"></a>缓存控制(HTTP/1.1定义的Cache-Control)</h5><ul>
+<li><code>Cache-Control:no-store</code> ：没有缓存。缓存中不得存储任何关于客户端请求和服务端响应的内容。每次由客户端发起的请求都会下载完整的响应内容。</li>
+<li><code>Cache-Control:no-cache</code>：<strong>缓存但重新验证</strong>。此方式下，每次有关请求发出时，该请求会带有与本缓存相关的验证字段，服务端会验证请求中所描述的缓存是否过期，如未过期（返回状态码304），则使用本地缓存副本。</li>
+<li><code>Cache-Control:private</code><strong>|</strong><code>Cache-Control:public</code> ：私有和公共缓存。private表示该响应是专用于某个用户的，中间人不能缓存此响应；public表示该缓存可以被任何中间人缓存。</li>
+<li><code>Cache-Control:max-age=31536000</code>：过期。表示资源能被缓存的最大时间，max-age是距离请求发起的时间的秒数。</li>
+<li><code>Cache-Control:must-revalidate</code>：验证方式。must-revalidate意味着在考虑使用一个陈旧的资源时，必须先验证它的状态，已过期的缓存将不被使用。</li>
+<li><code>Pragme</code>是HTTP/1.0定义的一个header属性，请求头中包含Pragme的效果与<code>Cache-Control:no-cache</code>相同，但是HTTP响应头中没有明确定义这个属性。</li>
+</ul>
+<h6 id="Vary响应"><a href="#Vary响应" class="headerlink" title="Vary响应"></a>Vary响应</h6><ul>
+<li>Vary响应头决定了对后续的请求头，如何判断时请求一个新的资源还是使用缓存的文件。</li>
+<li>当缓存服务器收到了一个请求，只有当前的请求和原始（缓存）的请求头跟缓存的响应头里的Vary都匹配，才能够使用缓存的响应。</li>
+</ul>
+<h4 id="二、开放同源限制"><a href="#二、开放同源限制" class="headerlink" title="二、开放同源限制"></a>二、开放同源限制</h4><ul>
+<li>只有来自相同来源的网页才能够获取网站的全部信息。HTTP可以通过修改头部来开放这样的限制。</li>
+</ul>
+<h4 id="三、认证"><a href="#三、认证" class="headerlink" title="三、认证"></a>三、认证</h4><ul>
+<li>一些页面能被保护起来，仅让特定的用户进行访问。基本的认证功能可以直接通过HTTP提供。</li>
+</ul>
+<h4 id="四、代理和隧道"><a href="#四、代理和隧道" class="headerlink" title="四、代理和隧道"></a>四、代理和隧道</h4><ul>
+<li>通常服务器或客户端都是处于内网，对外网隐藏真实IP。因此HTTP请求就要通过代理越过这个网络屏障。</li>
+</ul>
+<h5 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h5><ul>
+<li>也可以叫网关，它存储并转发网络服务（如DNS、网页）以减少和控制大家使用的带宽。</li>
+<li>正向代理代表客户端，可以隐藏客户端的身份。</li>
+</ul>
+<h5 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h5><ul>
+<li>反向代理代表服务器，可以隐藏服务器的身份。</li>
+<li>作用：<ul>
+<li>负载均衡：在多个服务器之间分发负载，</li>
+<li>缓存静态内容：缓存静态内容，为服务器分担压力，</li>
+<li>压缩：压缩和优化内容以加快传输的速度。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>代理可以将请求地址设置为自身的ip。</li>
+<li><code>Forwarded</code>（标准化版本）首部包含了代理服务器的客户端的信息。<ul>
+<li>语法：<code>Forwarded:by=&lt;identifier&gt;;for=&lt;identifier&gt;;host=&lt;host&gt;;proto=&lt;http|https&gt;</code></li>
+<li>identifier可以是：①ip地址；②语义不明的标识符；③unknown。</li>
+<li><code>by=&lt;identifier&gt;</code>该请求进入代理服务器的接口。</li>
+<li><code>for=&lt;identifier&gt;</code>发起请求的客户端以及代理链中的一系列的代理服务器（这意味着要写多个for=）。</li>
+<li><code>host=&lt;host&gt;</code>代理接收到的Host首部（Host请求指明了请求将要发送到的服务器主机名和端口号）的信息。</li>
+<li><code>proto=&lt;http|https&gt;</code>表示发起请求时采用的何种协议。</li>
+</ul>
+</li>
+<li><code>X-Forwarded-For</code>：在客户端访问服务器的过程中，如果需要经过HTTP代理或者负载均衡服务器，可以使用该参数来获取最初发起请求的客户端的IP地址。<ul>
+<li>语法：<code>X-Forward-For:&lt;client&gt;,&lt;proxy1&gt;,&lt;proxy2&gt;...</code>。</li>
+<li>第一个参数表示客户端的IP地址，如果一个请求经过了多个代理服务器，那么每一个代理服务器的IP都会被依次记录在内。</li>
+</ul>
+</li>
+<li><code>X-Forwarded-Host</code>：用来确定客户端发起请求中使用Host指定的初始域名<ul>
+<li><code>Host</code>：Host请求头指明了请求将要发送到的服务器的主机名和端口号，所有<strong>HTTP/1.1请求报文中必须包含一个Host头字段</strong>。</li>
+</ul>
+</li>
+<li><code>X-Forwarded-Proto</code>：用来确定客户端与代理服务器或者负载均衡服务器之间连接所采用的传输协议。</li>
+</ul>
+<h3 id="HTTP报文"><a href="#HTTP报文" class="headerlink" title="HTTP报文"></a>HTTP报文</h3><ul>
+<li>headers中以x开头的都不是http标准协议</li>
+</ul>
+<h4 id="http请求组成"><a href="#http请求组成" class="headerlink" title="http请求组成"></a>http请求组成</h4><ol>
+<li>第一行包括请求方法及请求参数</li>
+<li>接下来的行每一行都表示一个HTTP首部，为服务器提供关于所需数据的信息</li>
+<li>一个空行</li>
+<li>可选数据块，包含更多数据，主要被POST方法使用。</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#一个http的动作，如下面的method</span><br><span class="line">#要获取的资源路径，如下面的/chat</span><br><span class="line">#HTTP协议版本号</span><br><span class="line"><span class="keyword">GET</span> <span class="string">/chat</span> HTTP/1.1</span><br><span class="line">#Headers，为服务器表达其他的信息</span><br><span class="line">#Host指明了要发送到的服务器主机名</span><br><span class="line"><span class="attribute">Host</span>: xiaoxiang.space</span><br><span class="line">#指明了client的应用类型，操作系统、软件开发商及版本号</span><br><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0</span><br><span class="line">#告知服务器客户端可以处理的内容类型，采用mime来表示，;q=表示前面这个类型权重因子，没写就默认是1</span><br><span class="line"><span class="attribute">Accept</span>: application/json, text/javascript, */*; q=0.01</span><br><span class="line">#客户端声明其能理解的自然语言</span><br><span class="line"><span class="attribute">Accept-Language</span>: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">#会将客户端能够理解的内容编码方式通知给服务端。对应Content-Encoding</span><br><span class="line"><span class="attribute">Accept-Encoding</span>: gzip, deflate</span><br><span class="line">#指示资源的MIME类型，下面这是post请求的默认格式</span><br><span class="line"><span class="attribute">Content-Type</span>: application/x-www-form-urlencoded; charset=UTF-8</span><br><span class="line">#加了这个就是ajax异步请求</span><br><span class="line"><span class="attribute">X-Requested-With</span>: XMLHttpRequest</span><br><span class="line">#用来指明发送给服务器的消息主体的大小</span><br><span class="line"><span class="attribute">Content-Length</span>: 22</span><br><span class="line">#指示了请求来自哪个站点。</span><br><span class="line"><span class="attribute">Origin</span>: http://xiaoxiang.space</span><br><span class="line">#决定当前的事务完成后，是否会关闭网络连接，如果是keep-alive，网络连接就是持久的，使得对同一个服务器的请求可以继续在该连接上完成</span><br><span class="line"><span class="attribute">Connection</span>: keep-alive</span><br><span class="line">#包含了当前请求页面的来源页面的地址</span><br><span class="line"><span class="attribute">Referer</span>: http://xiaoxiang.space/index</span><br><span class="line">#是由先前服务器通过Set-Cookie首部投放并存储到客户端。</span><br><span class="line"><span class="attribute">Cookie</span>: JSESSIONID=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span><br><span class="line"></span><br><span class="line">#对于一些POST这样的方法，报文的body也包含了发送的资源</span><br><span class="line">username=xxx&amp;comment=xxx</span><br></pre></td></tr></table></figure>
+
+<h4 id="HTTP响应组成"><a href="#HTTP响应组成" class="headerlink" title="HTTP响应组成"></a>HTTP响应组成</h4><ol>
+<li>第一行是状态行，包括使用HTTP协议版本，状态码和一个状态描述。</li>
+<li>接下来的每一行都表示一个HTTP首部，为客户端提供所发送数据的一些信息。</li>
+<li>一个空行</li>
+<li>最后一行是数据库，包含了响应的数据</li>
+</ol>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#一个HTTP协议版本号</span><br><span class="line">#一个状态码</span><br><span class="line">#一个状态信息，我这个请求中居然没有？？？</span><br><span class="line">HTTP/1.1 <span class="number">200</span> </span><br><span class="line">#HTTP headers</span><br><span class="line">#用来向客户端发送cookie，expires表示过期时间</span><br><span class="line"><span class="attribute">Set-Cookie</span>: xiaoxiang.space=1; Max-Age=3600; Expires=Tue, 23-Mar-2021 11:21:23 GMT</span><br><span class="line"><span class="attribute">Content-Type</span>: application/json</span><br><span class="line">#指明了将entity安全传递给用户的编码形式，chunked表示数据以一系列分块的形式发送，这种情况下不发送Content-Length。</span><br><span class="line"><span class="attribute">Transfer-Encoding</span>: chunked</span><br><span class="line">#包含了报文创建的日期和时间。</span><br><span class="line"><span class="attribute">Date</span>: Tue, 23 Mar 2021 10:21:23 GMT</span><br><span class="line">#需要将Connection首部设为keep-alive这个首部才有意义，可以设置超时时长和最大请求数。</span><br><span class="line">#HTTP/2中Connection和Keep-Alive是被忽略的。</span><br><span class="line"><span class="attribute">Keep-Alive</span>: timeout=20</span><br><span class="line"><span class="attribute">Connection</span>: keep-alive</span><br><span class="line"></span><br><span class="line">#下面是响应的数据</span><br><span class="line"><span class="attribute">xxx</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>HTTP消息是服务器和客户端之间交换数据的方式，有两种类型的消息：请求和响应。</li>
+</ul>
+<h3 id="HTTP的连接管理"><a href="#HTTP的连接管理" class="headerlink" title="HTTP的连接管理"></a>HTTP的连接管理</h3><p><img src="/img/web/1.png" alt="HTTP连接管理"></p>
+<h4 id="短连接"><a href="#短连接" class="headerlink" title="短连接"></a>短连接</h4><ul>
+<li>HTTP/1.0的默认模型，每一次HTTP请求之前都会有一次TCP握手。在HTTP/1.1中，当<code>Connection</code>被设为<code>Close</code>才会用到这个模型。</li>
+</ul>
+<h4 id="长连接"><a href="#长连接" class="headerlink" title="长连接"></a>长连接</h4><ul>
+<li>HTTP/1.1中默认就是长连接，一个长连接会保持一段时间，重复用于发送一系列请求，节省了新建TCP连接握手的时间，这个连接会在空闲一段时间后关闭（通过设置<code>Keep-Alive</code>来指定一个最小的连接保持时间），长连接会消耗服务器资源（毕竟是TCP）。</li>
+</ul>
+<h4 id="流水线"><a href="#流水线" class="headerlink" title="流水线"></a>流水线</h4><ul>
+<li>默认情况下HTTP请求是按顺序发出的，下一个请求只有在当前请求收到应答后才会被发出。而流水线是在同一条长链上发出连续的请求。想象很美好，现实很残酷，流水线受制于很多问题。</li>
+</ul>
+<h3 id="一个post请求的java程序"><a href="#一个post请求的java程序" class="headerlink" title="一个post请求的java程序"></a>一个post请求的java程序</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    URL url = <span class="keyword">new</span> URL(<span class="string">&quot;http://xiaoxiang.space/login/&quot;</span>);</span><br><span class="line">    HttpURLConnection connection = (HttpURLConnection) url.openConnection();</span><br><span class="line">    <span class="comment">//用户可以输出到该URLConnection</span></span><br><span class="line">    connection.setDoOutput(<span class="keyword">true</span>);</span><br><span class="line">    String param = <span class="string">&quot;password=&quot;</span> + URLEncoder.encode(<span class="string">&quot;小象&quot;</span>, <span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//request headers</span></span><br><span class="line">    connection.setRequestMethod(<span class="string">&quot;POST&quot;</span>);</span><br><span class="line">    connection.setRequestProperty(<span class="string">&quot;Accept&quot;</span>, <span class="string">&quot;text/html&quot;</span>);</span><br><span class="line">    connection.setRequestProperty(<span class="string">&quot;User-Agent&quot;</span>, <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0&quot;</span>);</span><br><span class="line">    connection.setRequestProperty(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/x-www-form-urlencoded; charset=UTF-8&quot;</span>);</span><br><span class="line">    <span class="comment">//general headers</span></span><br><span class="line">    connection.setRequestProperty(<span class="string">&quot;Connection&quot;</span>, <span class="string">&quot;close&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//entity headers，必须放在request headers和general headers后面，否则会报错</span></span><br><span class="line">    connection.getOutputStream().write(param.getBytes(StandardCharsets.UTF_8));</span><br><span class="line"></span><br><span class="line">    <span class="comment">//关闭重定向，可以打开试一试</span></span><br><span class="line">    connection.setInstanceFollowRedirects(<span class="keyword">false</span>);</span><br><span class="line">    connection.connect();</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;\n响应头：&quot;</span>);</span><br><span class="line">    connection.getHeaderFields().forEach((k, v) -&gt; &#123;</span><br><span class="line">        System.out.println(k + <span class="string">&quot;: &quot;</span> + v);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果有网页的话会输出该网页</span></span><br><span class="line">    InputStream inputStream = connection.getInputStream();</span><br><span class="line">    Scanner scanner = <span class="keyword">new</span> Scanner(inputStream,<span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">    <span class="keyword">while</span> (scanner.hasNext()) &#123;</span><br><span class="line">        System.out.println(scanner.nextLine());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-url" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/02/23/url/" class="article-date">
+  <time datetime="2021-02-23T03:57:23.000Z" itemprop="datePublished">2021-02-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/web/">web</a>►<a class="article-category-link" href="/categories/web/http/">http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/23/url/">url</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="url参数（get）"><a href="#url参数（get）" class="headerlink" title="url参数（get）"></a>url参数（get）</h2><ul>
+<li>每个参数都是键值对，用&amp;分开</li>
+<li>字符a-z，A-Z，0-9，<code>. - * _</code>不变。</li>
+<li>用<code>+</code>替换空格。</li>
+<li>将其他所有字符编码为UTF-8，并将每个字节都编码为%后跟一个两位的16进制数字。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-mime" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/02/19/mime/" class="article-date">
+  <time datetime="2021-02-19T08:47:06.000Z" itemprop="datePublished">2021-02-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/web/">web</a>►<a class="article-category-link" href="/categories/web/http/">http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/19/mime/">mime</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>MIME：multipurpose internet mail extensions媒体类型</li>
+<li>浏览器通常使用mime类型来确定如何处理url</li>
+</ul>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><h3 id="通用结构"><a href="#通用结构" class="headerlink" title="通用结构"></a>通用结构</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#大小写不敏感</span><br><span class="line">type/subtype</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#text表明是普通文本</span><br><span class="line">text/html </span><br><span class="line">text/css</span><br><span class="line">text/xml</span><br><span class="line">#image表示是某种图像（包括动态图片）</span><br><span class="line">image/jpeg</span><br><span class="line">image/png</span><br><span class="line">#applicaiton表示是某种二进制数据</span><br><span class="line">application/pdf</span><br><span class="line">application/json</span><br><span class="line">text/javascript</span><br><span class="line">#audio表示是某种音频文件</span><br><span class="line">#video表示是某种视频文件</span><br><span class="line">#multipart表示细分领域的文件类型的种类</span><br><span class="line">#...</span><br></pre></td></tr></table></figure>
+
+<h3 id="部分MIME类型介绍"><a href="#部分MIME类型介绍" class="headerlink" title="部分MIME类型介绍"></a>部分MIME类型介绍</h3><ul>
+<li><code>application/octet-stream</code>：这是应用程序的默认值，意思是未知的应用程序文件。</li>
+<li><code>text/plain</code>文本的默认值</li>
+<li><code>text/css</code>：网页中要被解析为css的任何css文件必须指定MIME为<code>text/css</code>。</li>
+</ul>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_Types">MIME类型</a> | <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types">常见MIME类型列表</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-文件系统" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/02/08/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="article-date">
+  <time datetime="2021-02-08T05:52:46.000Z" itemprop="datePublished">2021-02-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/08/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">文件系统</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>传统磁盘中，一个分区就是一个文件系统，但现在并不准确。文件系统通常将权限和属性放在inode中，将实际数据放到data block中。另外，有一个superblock记录整个文件系统的整体信息。</p>
+<ul>
+<li>superblock：记录此文件系统的整体信息，包括inode/block的总量、使用量、剩余量，以及文件系统的格式与相关信息等；</li>
+<li>inode：记录文件的属性（rwx、群组、时间参数等），一个文件占用一个inode，同时记录此文件数据所在的block号码；</li>
+<li>block：实际记录文件的内容，若文件太大时，会占用多个block。<br>每个inode和block都有编号，inode内有文件数据的block号码。</li>
+<li>索引文件系统：上面的数据存取方法就是。</li>
+<li>FAT：没有inode存在，每个block号码都记录在前一个block中，像一条链子一样。</li>
+</ul>
+<h3 id="Ext2"><a href="#Ext2" class="headerlink" title="Ext2"></a>Ext2</h3><p>EXT2设置多个区块群组，每个区块群组都有独立的inode/block/superblock系统。<br>每个区块群组有6个部分：</p>
+<ol>
+<li><p>data block（数据区块）：存放文件内容。Ext2中支持的block大小有1k，2k及4k，在格式化的时候就固定了，每个block只能放一个文件的数据。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>1kB</th>
+<th>2kB</th>
+<th>4kB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最大单一文件限制</td>
+<td>16GB</td>
+<td>256GB</td>
+<td>2TB</td>
+</tr>
+<tr>
+<td>最大文件系统容量</td>
+<td>2TB</td>
+<td>8TB</td>
+<td>16TB</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>inode table（inode 表格）：记录的数据：存取模式（rwx）；拥有者和群组；文件的大小；文件创建时间，修改时间；读取时间；定义文件特性的flag；该文件内容的指向。</p>
+<ul>
+<li>inode数量和大小在格式化时就固定了。</li>
+<li>每个inode大小固定为128B（新的ext4和xfs可以设置到256B）；</li>
+<li>每个文件只会占用一个inode；所以文件系统能创建的文件数量与inode的数量有关；</li>
+<li>系统读取文件时需要先找到inode，在分析权限后，才进行下一步；</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-linux命令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/02/08/linux%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2021-02-08T03:29:58.000Z" itemprop="datePublished">2021-02-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/08/linux%E5%91%BD%E4%BB%A4/">linux命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p><code>kill </code></p>
+<ul>
+<li><code>kill -9 PID</code>立刻强制删除一个工作</li>
+<li><code>kill  [-15] PID</code>以正常的方式结束一个工作</li>
+<li>example：当使用vim时，会产生一个.filename.swp文件，使用-15时，vim会以正常的步骤结束vi的工作，所以.filename.swp会被主动的移除，但如果使用-9，由于vim工作被强制移除了，所以.filename.swp就会继续存在文件系统中。</li>
+</ul>
+</li>
+<li><p>netstat：显示网络状态</p>
+<ul>
+<li><code>-a --all</code>显示所有连线中的socket</li>
+<li><code>-o</code>：windows下是显示进程的PID</li>
+<li><code>-n --numeric</code>：显示IP地址而不是域名</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/web/">web</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/django/">django</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/web/http/">http</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/">mybatis入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/24/cors/">cors</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/22/android/">android</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 小象<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

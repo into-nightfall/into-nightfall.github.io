@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>小象のblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="记录学习笔记">
+<meta property="og:type" content="website">
+<meta property="og:title" content="小象のblog">
+<meta property="og:url" content="https://xiaoxiangxiong.gitee.io/page/3/index.html">
+<meta property="og:site_name" content="小象のblog">
+<meta property="og:description" content="记录学习笔记">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="小象">
+<meta property="article:tag" content="xiaoxiang,小象のblog">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="小象のblog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="mheader">
+    <div class="mtitle-wrap">
+        <a href="/" class="mtitle">小象のblog</a>
+		<a href="/archives/" class="msubtitle">概览</a>
+		<a href="http://xiaoxiang.space" target="_self" class="msubtitle">说点什么</a>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-mysql" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/02/04/mysql/" class="article-date">
+  <time datetime="2021-02-04T07:58:03.000Z" itemprop="datePublished">2021-02-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>►<a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/04/mysql/">mysql</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>查询版本和当前时间<code>select version(),current_date;</code></li>
+<li>mysql执行结束后会显示返回了多少行和用了多长时间，受网络其他因素影响</li>
+<li>用作计算器<code>select sin(pi()/4),(4+1)*5);</code></li>
+<li><code>select user()</code> ,后面补充</li>
+<li>当输入多行，打算不执行这句sql语句，输入<code>\c</code></li>
+<li>自带的的mysql database描述了用户的访问权限</li>
+<li><code>GRANT ALL ON menagerie.* TO &#39;your_mysql_name&#39;@&#39;your_client_host&#39;;</code>menagerie数据库只有your_sql_name能操作。</li>
+<li>unix下数据库名是大小写相关的。建议在创建数据库的时候要么全大写，要么全小写。</li>
+<li>查看当前账户拥有的权限，可以使用<code>show grants for &#39;joe&#39;@&#39;home.example.com&#39;</code></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-目录配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/02/02/%E7%9B%AE%E5%BD%95%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2021-02-02T02:29:16.000Z" itemprop="datePublished">2021-02-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/02/%E7%9B%AE%E5%BD%95%E9%85%8D%E7%BD%AE/">目录配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="根目录"><a href="#根目录" class="headerlink" title="根目录"></a>根目录</h4><table>
+<thead>
+<tr>
+<th>目录</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/bin</td>
+<td>（binary）存放很多可执行的文件，比如cat，chmod，mv，bash等</td>
+</tr>
+<tr>
+<td>/boot</td>
+<td>存放开机会使用到的文件，如/boot/grub</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>linux中任何外部设备都是以文件的形态存在于这个目录中</td>
+</tr>
+<tr>
+<td>/etc</td>
+<td>系统主要的配置文件几乎都在这个目录中，</td>
+</tr>
+<tr>
+<td>/lib</td>
+<td>存放系统动态链接共享库的</td>
+</tr>
+<tr>
+<td>/media</td>
+<td>存放的是可移除的设备，如光盘、dvd等，能暂时挂载到这里</td>
+</tr>
+<tr>
+<td>/mnt</td>
+<td>可以用来暂时挂载某些额外的设备</td>
+</tr>
+<tr>
+<td>/opt</td>
+<td>是给第三方协力软件放置的目录（没太明白，之后补充）</td>
+</tr>
+<tr>
+<td>/run</td>
+<td>规定开机后所产生的各项信息要放到该文件夹中</td>
+</tr>
+<tr>
+<td>/sbin</td>
+<td>设置系统环境的，包括了开机、修复、还原系统所需要的指令</td>
+</tr>
+<tr>
+<td>/srv</td>
+<td>（service）是一些网络服务启动后，这些服务所需要取用的数据目录</td>
+</tr>
+<tr>
+<td>/tmp</td>
+<td>暂时放置文件的位置</td>
+</tr>
+<tr>
+<td>/home</td>
+<td>系统默认的使用者主文件夹。如bes用户的默认文件夹就是/home/bes</td>
+</tr>
+<tr>
+<td>/root</td>
+<td>root的主文件夹</td>
+</tr>
+<tr>
+<td>/lost+found</td>
+<td>使用ext文件系统格式才会产生的目录，目的是当文件系统发生错误时，将一些遗失的片段放到这</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>这个目录下的数据都在内存中，所以本身不占磁盘空间。如/proc/cpuinfo等。</td>
+</tr>
+<tr>
+<td>/sys</td>
+<td>主要记录与核心与系统硬件信息较相关的信息。不占磁盘空间</td>
+</tr>
+<tr>
+<td></td>
+<td>/usr （unix software resource）与软件安装有关；/var （variable）与系统运行过程有关。</td>
+</tr>
+</tbody></table>
+<h4 id="user"><a href="#user" class="headerlink" title="/user"></a>/user</h4><table>
+<thead>
+<tr>
+<th>目录</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/usr/bin</td>
+<td>有的linux中/usr/bin和/bin一样，存放了可执行文件</td>
+</tr>
+<tr>
+<td>/usr/lib</td>
+<td>与/lib功能相同</td>
+</tr>
+<tr>
+<td>/usr/local</td>
+<td>在本机自行安装自己下载的软件，建议安装到此目录。</td>
+</tr>
+<tr>
+<td>/usr/sbin</td>
+<td>基本功能与/sbin差不多</td>
+</tr>
+<tr>
+<td>/usr/share</td>
+<td>好多文档都在这里</td>
+</tr>
+<tr>
+<td>/usr/include</td>
+<td>c/c++等头文件和include文件的放置位置</td>
+</tr>
+<tr>
+<td>/usr/src</td>
+<td>源代码建议放到这里</td>
+</tr>
+</tbody></table>
+<h4 id="var"><a href="#var" class="headerlink" title="/var"></a>/var</h4><table>
+<thead>
+<tr>
+<th>目录</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/var/cache</td>
+<td>应用程序运行过程产生的一些暂存盘</td>
+</tr>
+<tr>
+<td>/var/lib</td>
+<td>程序本身执行的过程中，需要使用到的数据文件放置的目录</td>
+</tr>
+<tr>
+<td>/var/lock</td>
+<td>某些设备或者是文件资源一次只能被一个应用程序所使用。</td>
+</tr>
+<tr>
+<td>/var/log</td>
+<td>登陆文件放置的目录</td>
+</tr>
+<tr>
+<td>/var/run</td>
+<td>某些应用程序启动后，会将他们的pid放置到该目录，这个目录链接到了/run</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-git分支" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/01/28/git%E5%88%86%E6%94%AF/" class="article-date">
+  <time datetime="2021-01-28T08:11:34.000Z" itemprop="datePublished">2021-01-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/git/">git</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/28/git%E5%88%86%E6%94%AF/">git分支</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>在git提交时，会保存一个commit对象，该对象包含指向本次提交内容快照的指针和0个或多个指向该其父对象（之前提交的）的指针。普通提交有一个父对象，分支合并提交有多个父对象。</li>
+</ul>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><ul>
+<li>git分支，是一个指向commit对象的可变指针，它在每次提交后都会指向当前的commit对象。git有一个名为HEAD的特别指针，它是一个指向当前工作的本地分支的指针。</li>
+<li></li>
+<li><img src="/img/git/1.png"></li>
+<li>创建一个新的分支<code>git branch testing</code>，这会在当前commit对象上新建一个分支指针。<br><img src="/img/git/3.png"></li>
+<li>切换到其他分支<code>git checkout testing</code>，这样HEAD就指向了testing分支。<br><img src="/img/git/4.png"></li>
+<li>当在该testing支下修改文件并提交后，会新建一个commit对象，testing指向了该对象。而在我们切换回master分支时，master仍然指向上一个commit对象<br><img src="/img/git/5.png"></li>
+<li>当在master分支下修改文件并提交后：<br><img src="/img/git/6.png"></li>
+</ul>
+<h4 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h4><ul>
+<li>只有在本地修改或者产生了文件才会创建主分支master，这个时候才能创建新分支。</li>
+<li><code>git branch</code>查看所有的分支，<code>*</code>表示当前分支。</li>
+<li><code>git checkout -b testing</code>相当于<code>git branch testing 和 git checkout testing</code></li>
+<li>删除分支<code>git branch -d testing</code></li>
+<li>分支的合并：在当前分支下（如master），执行<code>git merge testing</code>，会创建新的commit对象，master也会指向他。该commit对象有两个父指针。</li>
+<li>分支的合并会用两个分支的末端以及他们的共同祖先进行一次的三方合并，当两个分支在同一个commit链上时，旧一点的那个分支发起合并，则将其直接指向了新一点的那个分支。</li>
+<li>有时候分支合并会失败，比如两个分支同时修改了相同的文件。这个时候<code>git merge testing</code>仍然做了合并，但是没有提交，可以使用<code>git status</code>查看，此时就需要手动合并了。</li>
+<li><code>git branch --merged</code>查看那些分支已被并入当前分支。<code>git branch --no-merged</code>查看尚未合并的分支。</li>
+<li>删除远程分支<code>git push [远程名]:[分支名]</code>（没错，就是这样）。</li>
+<li>分支的衍合（rebase），<code>git rebase master</code>。他的结果和直接使用merge一样。<strong>谨慎使用该方式</strong></li>
+</ul>
+<p><strong>参考链接：<a target="_blank" rel="noopener" href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html">Pro Git</a></strong><br><strong>参考链接：<a target="_blank" rel="noopener" href="https://gitee.com/opensource-guide/git_tutorial/Git%20%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/%E5%B8%B8%E7%94%A8%20Git%20%E5%91%BD%E4%BB%A4/#git-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C">开源指北</a></strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-git起步" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/01/28/git%E8%B5%B7%E6%AD%A5/" class="article-date">
+  <time datetime="2021-01-28T05:49:03.000Z" itemprop="datePublished">2021-01-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/git/">git</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/28/git%E8%B5%B7%E6%AD%A5/">git起步</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>git：每一次的clone操作，实际上都是对一次代码仓库的完整备份。</li>
+<li>git中文件的三种状态：已修改（modified）和已暂存（staged），已提交（committed）：<ul>
+<li>已修改<sup><a id="modified" herf="javascript:;">tag1</a></sup>表示已修改了某个文件，但还没有提交保存（git add之前）；</li>
+<li>已暂存表示把已修改的文件放在下次提交的清单中（git add 之后）;</li>
+<li>已提交表示该文件已经被安全保存在本地数据库中（git commit之后）；</li>
+</ul>
+</li>
+<li>每个项目都有一个git目录（.git），git工作流程如下：<ol>
+<li>在工作目录（.git的兄弟目录）中修改某些文件；</li>
+<li>对修改后的文件保存到暂存区域；</li>
+<li>提交跟新，将暂存区域的文件快照转储到git目录中。</li>
+<li>提交到远程仓库。</li>
+</ol>
+</li>
+</ul>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><ol>
+<li>注册git账号，github或者gitee（访问快一点），并建立一个公开的仓库（下面用）。</li>
+<li>安装git，配置个人用户名称和电子邮件地址。<br> <code>git config --global user.name &quot;xiaoxiang&quot;</code><br> <code>git config --global user.email &quot;xiaoxiang@xxxx.com&quot;</code></li>
+<li>可以使用<code>git config --list</code>查看已有的配置信息。</li>
+<li>从现有的git仓库克隆<code>git clone [远程仓库]</code>。</li>
+<li>工作目录下的文件分为两种状态：已跟踪和未跟踪：<ul>
+<li>已跟踪是本地仓库中有的文件，初次克隆某个仓库时，工作目录的所有文件都是已跟踪的文件。</li>
+<li>未跟踪是新创建的文件，即对该文件从来没有执行git add命令。</li>
+<li>当编辑过某些文件后，git将这些文件标记为已修改，这就跟<a href="#modified">tag1</a>对于上了。</li>
+</ul>
+</li>
+<li>使用<code>git add</code>开始跟踪一个新文件，<code>git add .</code>暂存当前路径下的所有的已修改的文件。<ul>
+<li>通过<code>git status</code>可以查看文件的状态。</li>
+<li>取消已暂存的状态<code>git reset HEAD  &quot;文件名&quot;</code></li>
+</ul>
+</li>
+<li>使用<code>git commit -m &quot;提交说明&quot;</code>来提交暂存区的数据到<strong>本地仓库</strong>。</li>
+<li>使用<code>git push origin master</code> 将修改提交到远程仓库。（使用<code>ssh-keygen</code>生成密钥，并将公钥放到git上去，以后提交就不用输账号和密码了）。<ul>
+<li><code>git push [remote-name] [branch-name]</code>，这是完整命令。当使用克隆命令时，默认使用origin作为远程仓库的名字，master作为本地分支的名字，<code>git push</code>不加其他参数也能用，但是如果你创建了好几个分支就得加上[remote-name]和[branch-name]。</li>
+</ul>
+</li>
+</ol>
+<h4 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h4><ul>
+<li>可以创建一个.gitignore文件，来指明哪些文件不需要被提交到仓库。</li>
+<li>查看文件修改了什么地方，可以使用<code>git diff</code>指令。</li>
+<li>从git暂存区移除文件可以使用<code>git rm</code>，他不会移除工作目录的文件（这要自己删除）。</li>
+<li>查看提交历史<code>git log</code>，后跟<code>-2</code>只会显示最近两次的跟新。</li>
+<li>添加一个远程仓库<code>git remote add [仓库名称] [仓库地址]</code>,抓取该仓库所有文件<code>git fetch [仓库名称]</code>,切换到该仓库<code>git checkout [仓库名称]/master</code>，修改远程仓库的名字<code>git remote rename [原名] [新名]</code>。</li>
+<li><code>git pull</code>是将远程仓库抓下来，合并到本地分支。</li>
+<li><code>git tag</code>可以给某一时间点的版本打标签。</li>
+<li><code>git remote set-url origin 仓库地址</code>：修改仓库的远程地址</li>
+<li><code>git remote -v</code>：查看当前仓库对应的远程地址。</li>
+<li><code>git update-index --assume-unchanged 文件名</code>：取消本地跟踪</li>
+<li><code>git update-index --no-assume-unchanged 文件名</code>：恢复本地跟踪</li>
+<li>协议：<ul>
+<li>ssh协议：唯一一个同时支持读写操作的网络协议，但无法实现对仓库的匿名访问。</li>
+<li>git协议：该协议通常用来克隆，<strong>通常</strong>不能用来推送（因为没有授权机制，如果允许推送操作，每一个知道该URL的人都有推送权限），比http协议高效。</li>
+<li>http/s协议：容易搭建，通常用来克隆。</li>
+</ul>
+</li>
+</ul>
+<p><strong>参考链接：<a target="_blank" rel="noopener" href="http://git.oschina.net/progit/">Pro Git</a></strong><br><strong>参考链接：<a target="_blank" rel="noopener" href="https://gitee.com/opensource-guide/git_tutorial/Git%20%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/%E5%B8%B8%E7%94%A8%20Git%20%E5%91%BD%E4%BB%A4/#git-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C">开源指北</a></strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-文件起步" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/01/27/%E6%96%87%E4%BB%B6%E8%B5%B7%E6%AD%A5/" class="article-date">
+  <time datetime="2021-01-27T03:17:28.000Z" itemprop="datePublished">2021-01-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/27/%E6%96%87%E4%BB%B6%E8%B5%B7%E6%AD%A5/">文件起步</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Linux文件信息"><a href="#Linux文件信息" class="headerlink" title="Linux文件信息"></a>Linux文件信息</h3><p><code>-rw-r--r-- 1 bes bes  2625 Jan 27 11:11 _config.yml</code></p>
+<ul>
+<li>第一栏表示文件类型和权限；<ul>
+<li>第一个字符代表该文件的类型，-表示文件，d表示目录，l表示链接文件（link），b表示区块文件（block），c表示字符设备文件（character），s表示数据接口文件（sockets），p表示数据输送档（FIFO,pipe）。</li>
+<li>下来9个字符每三个为一组（r表示可读，w表示可写，x表示可执行，-表示无该权限）：<ul>
+<li>第一组表示文件拥有者可具备的权限；</li>
+<li>第二组表示加入此群组的账号的权限；</li>
+<li>第三组为非本人且没有加入本群组的其他账号的权限。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>第二栏表示有多少文件名链接到此节点（i-node）；</li>
+<li>第三栏表示该文件所属的用户，第四栏表示所属群组；</li>
+<li>第五栏表示容量大小，第六栏表示最近的修改时间，第七栏为文件名。</li>
+</ul>
+<h4 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h4><ul>
+<li>如果用户对一个目录只有只读权限，那么是无法进入此目录的，他必须持有执行权限。</li>
+<li>对目录有只读权限表示它可以查看该目录下的文件名数据（用ls+目录名）。</li>
+<li>root不受权限限制。</li>
+<li>文件的写权限指可以编辑文件，但不包含删除文件。</li>
+<li>能否删除文件由该文件上层目录的权限决定，当用户对该目录有写权限，那么他可以删除该目录下的文件和目录。</li>
+<li>umask：查看和设置文件权限。如002，表示user和group拥有全部权限，others拥有r和x权限。</li>
+<li>特殊权限（有些文件或目录会出现rws或rwt的情况，这就是特殊权限。注意：当S或者T为大写的时候，表示无效，因为使用者没有该程序的执行权限）<ul>
+<li>SUID（s）：只对二进制文件（可执行的程序）有效；执行者要对该程序具有x的权限；在执行该程序时，执行者将短暂获得该程序拥有者（比如root）的权限。</li>
+<li>SGID（s）：可以针对二进制文件或目录来设置。对二进制文件：执行者要对该程序具有x的权限，在执行该程序时，执行者将获得该程序所在群组的支持。对目录：代表使用者在这个目录下面新建的文件的文件群组都会与该目录的群组名称相同。</li>
+<li>SBIT（t）：只针对目录有效，当使用者对该目录有w和x权限，只有自己和root才能删掉自己创建的文件或目录。</li>
+<li>权限和数字存在对应，SUID为4，SGID为2，SBIT为1。</li>
+</ul>
+</li>
+</ul>
+<h3 id="查看文件内容"><a href="#查看文件内容" class="headerlink" title="查看文件内容"></a>查看文件内容</h3><ul>
+<li>cat：从第一行开始显示文件内容</li>
+<li>tac：从最后一行开始显示</li>
+<li>nl：显示的时候输出行号</li>
+<li>more：一页一页的显示文件内容</li>
+<li>less：与more类似，但是可以往前翻<ul>
+<li><code>/srting</code>，向下搜索string</li>
+<li><code>?string</code>，向上搜索string</li>
+</ul>
+</li>
+<li>head：只看头几行<ul>
+<li>默认是显示10行</li>
+<li><code>head -n -100 filename</code>文件后面100行不显示</li>
+</ul>
+</li>
+<li>tail：只看尾几行<ul>
+<li>默认是显示10行</li>
+<li><code>tail -n +100 filename</code>文件后面100行以后都会被列出来</li>
+</ul>
+</li>
+<li>od：以二进制查看</li>
+<li>file：查看文件类型</li>
+</ul>
+<h3 id="查找文件"><a href="#查找文件" class="headerlink" title="查找文件"></a>查找文件</h3><ul>
+<li>whereis：针对几个特定目录查找文件，<code>whereis -l</code>查看这几个特定目录。</li>
+<li>which：根据PATH查看可执行文件。</li>
+<li>locate：根据/var/lib/mlocate内的数据库记载搜索文件（数据库未更新前搜索某新建的文件可能搜不到）。</li>
+<li>find：强大的查询工具。用法<code>find [PATH] [option] [action]</code>，PATH可以是多个目录，find查找会进入子目录。<ul>
+<li>查看/home下3天前到4天前中间的24小时内有修改的文件<code>find /home -mtime 3</code>（如果是+3表示大于等于3天前的文件名，-3表示小于等于3天内的文件名）；</li>
+<li>查看/home下属于bes的文件<code>find /home -user bes</code>，查看不属于任何人的文件<code>find / -nouser</code>；</li>
+<li>查到/home下文件名包含了passwd的文件名<code>find /home -name &quot;*passwd*&quot;</code>;</li>
+<li>查看/home下文件类型为普通文件的文件名<code>find /home -type f</code>;</li>
+<li>查看文件权限大于755的文件名<code>find -perm /755</code>；</li>
+<li><code>find / -perm /7000 -exec ls -l &#123;&#125; \;</code>其中{}表示find找到的内容会放到{}中；-exec到;是关键字，表示开始和结束。</li>
+<li>find查找会直接去查找磁盘，可能比较慢。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-常量池" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/01/27/%E5%B8%B8%E9%87%8F%E6%B1%A0/" class="article-date">
+  <time datetime="2021-01-27T03:04:38.000Z" itemprop="datePublished">2021-01-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>►<a class="article-category-link" href="/categories/java/jvm/">jvm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/27/%E5%B8%B8%E9%87%8F%E6%B1%A0/">常量池</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h3><ul>
+<li>常量池中主要存放两大类常量：字面量和符号引用。</li>
+<li>字面量比较接近Java语言层面的常量概念，如文本字符串、声明为final的常量值等。</li>
+<li>符号引用包括了下面三类常量：类和接口的全限定命名、字段的名称和描述符、方法的名称和描述符。</li>
+<li>在class文件中不会保存各个方法、字段的最终内存布局信息，当虚拟机运行时，需要从常量池中获得对应的符号引用，再在类创建时或运行时解析、翻译到具体的内存地址中。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-DataOutputStream的writeChars" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/01/27/DataOutputStream%E7%9A%84writeChars/" class="article-date">
+  <time datetime="2021-01-27T03:02:06.000Z" itemprop="datePublished">2021-01-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/27/DataOutputStream%E7%9A%84writeChars/">DataOutputStream的writeChars</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>DataOutputStream的writeChars不推荐使用！</li>
+<li>writeChars是将String直接拆成了byte（即先获取String对应的char数组，再将一个char分割成两个byte）。如果在客户端使用了该方法写入一个字符串，再在服务端读取，因为DataInputStream并没有readChars方法，只能使用read方法读取一个byte数组。这就会导致一个问题，byte数组转化为String会有一个编码的问题，服务端可能会出现错误。</li>
+<li>正确的姿势是使用DataOutputStream的write方法写入一个byte数组，两端使用相同的编码。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-java随笔" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/01/27/java%E9%9A%8F%E7%AC%94/" class="article-date">
+  <time datetime="2021-01-27T02:59:11.000Z" itemprop="datePublished">2021-01-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/27/java%E9%9A%8F%E7%AC%94/">java随笔</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><ul>
+<li>所有的异常都继承自Throwable；</li>
+<li>Throwable有两个子类：Error，Exception。</li>
+<li>Error描述了java运行时系统的内部错误和资源耗尽错误；</li>
+<li>Exception有有两个分支，一个分支派生于RuntimeException，另一个分支包含其他异常。</li>
+<li>由程序错误导致的异常属于RuntimeException，例如：数组下标越界，错误的类型转换，空指针异常；<br>其他异常包括IOException,SQLException等。</li>
+</ul>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><ul>
+<li>对于sun jdk来说，它的windows版和linux版都是使用一对一的线程模型实现的，一条java线程就映射到一条轻量级进程中，因为windows和linux系统提供的线程模型就是一对一的。</li>
+</ul>
+<h3 id="cas"><a href="#cas" class="headerlink" title="cas"></a>cas</h3><ul>
+<li>cas指令需要有3个操作数，</li>
+<li>分别是变量的内存地址（V），旧的预期值（A）和新值（B）。</li>
+<li>当cas指令执行时，当且仅当V符合旧预期值A时，处理器用新值B更新V的值，否则他就不执行更新。<br>（但是无论是否更新了V的值，都会返回V的旧值。）</li>
+<li>上述的操作是一个原子操作。</li>
+</ul>
+<h3 id="class文件"><a href="#class文件" class="headerlink" title="class文件"></a>class文件</h3><ul>
+<li>将一个局部变量加载到操作数栈Tload</li>
+<li>将一个数值从操作数栈存储到局部变量表Tstore</li>
+<li>将一个常量加载到操作数栈:bipush\sipush\ldc\Tconst_</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Buffer" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/01/27/Buffer/" class="article-date">
+  <time datetime="2021-01-27T02:57:51.000Z" itemprop="datePublished">2021-01-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>►<a class="article-category-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/27/Buffer/">Buffer</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h3><ul>
+<li>使用Buffer读写数据一般遵循四个步骤：①写入数据到Buffer；②调用flip()方法；③从Buffer中读入数据；④调用clear()或者compact()方法。</li>
+<li>缓冲区的本质是一块可以写入数据，然后可以从中读取数据的内存。</li>
+<li>Buffer的三个属性：1.capacity 2.position 3.limit<ul>
+<li>capacity 表示该内存块的大小</li>
+<li>position 当你写入数据到Buffer中，position表示当前的位置。当将Buffer从写模式切换到读模式时，position会被置为0。</li>
+<li>limit 写模式下，limit等于capacity。当将Buffer从写模式切换到读模式时，limit表示你最多能读入多少数据，所以此时limit会被设置为写模式下的position值。</li>
+</ul>
+</li>
+<li>flip()方法将Buffer从写模式切换到读模式。调用该方法会将position设置为0，将limit设置为position的之前的值。</li>
+<li>rewind()将position设回0。</li>
+<li>clear()将position设置为0，将limit设置为capacity，表示可以写入了。</li>
+<li>compact()将所有未读的数据拷贝到Buffer的起始处，然后将position设置到最后一个未读元素正后面，limit设置为capacity，表示可以写入了。</li>
+<li>mark()可以记录一个特定的position。之后可以调用reset()恢复到这个位置。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-java内存模型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/24/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" class="article-date">
+  <time datetime="2020-11-24T07:57:57.000Z" itemprop="datePublished">2020-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>►<a class="article-category-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/24/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">java内存模型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>原子性：保证指令不会受到线程上下文切换的影响</li>
+<li>可见性：保证指令不会受到cpu缓存的影响<ul>
+<li>synchronized和volatile都可以保证可见性</li>
+</ul>
+</li>
+<li>有序性：保证指令不会受到cpu指令并行优化的影响</li>
+</ul>
+<h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><ul>
+<li>它可以用来修饰成员变量和静态成员变量，避免线程从自己的工作缓存中查找变量的值，必须到主存中获取它的值，线程操作volatile变量都是直接操作主存。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">Next</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/web/">web</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/django/">django</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/web/http/">http</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/">mybatis入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/24/cors/">cors</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/22/android/">android</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 小象<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

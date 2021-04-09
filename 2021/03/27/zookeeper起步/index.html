@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>zookeeper起步 | 小象のblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="zkCli.sh -server localhost:2181：连接到zookeeper  复制模式下的配置小结（以3台linux举例）  为每一台linux安装上zookeeper 修改他们的配置文件zoo.cfg（3份可以一样） 在dataDir路径下创建myid文件，里面写一个数字，与server.x的x对应 每一台都启动zookeeper    123456789101112131415">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zookeeper起步">
+<meta property="og:url" content="https://xiaoxiangxiong.gitee.io/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/index.html">
+<meta property="og:site_name" content="小象のblog">
+<meta property="og:description" content="zkCli.sh -server localhost:2181：连接到zookeeper  复制模式下的配置小结（以3台linux举例）  为每一台linux安装上zookeeper 修改他们的配置文件zoo.cfg（3份可以一样） 在dataDir路径下创建myid文件，里面写一个数字，与server.x的x对应 每一台都启动zookeeper    123456789101112131415">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-27T06:57:57.000Z">
+<meta property="article:modified_time" content="2021-04-09T03:18:20.169Z">
+<meta property="article:author" content="小象">
+<meta property="article:tag" content="xiaoxiang,小象のblog">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="小象のblog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="mheader">
+    <div class="mtitle-wrap">
+        <a href="/" class="mtitle">小象のblog</a>
+		<a href="/archives/" class="msubtitle">概览</a>
+		<a href="http://xiaoxiang.space" target="_self" class="msubtitle">说点什么</a>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-zookeeper起步" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/" class="article-date">
+  <time datetime="2021-03-27T06:57:57.000Z" itemprop="datePublished">2021-03-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/zookeeper/">zookeeper</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      zookeeper起步
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p><code>zkCli.sh -server localhost:2181</code>：连接到zookeeper</p>
+</li>
+<li><p>复制模式下的配置小结（以3台linux举例）</p>
+<ol>
+<li>为每一台linux安装上zookeeper</li>
+<li>修改他们的配置文件zoo.cfg（3份可以一样）</li>
+<li>在dataDir路径下创建myid文件，里面写一个数字，与server.x的x对应</li>
+<li>每一台都启动zookeeper</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#zookeeper使用的基本时间单位</span></span><br><span class="line"><span class="attr">tickTime</span>=<span class="string">2000</span></span><br><span class="line"><span class="comment">#存储内存数据库快照的位置</span></span><br><span class="line"><span class="attr">dataDir</span>=<span class="string">/var/lib/zookeeper</span></span><br><span class="line"><span class="comment">#对client端提供服务</span></span><br><span class="line"><span class="attr">clientPort</span>=<span class="string">2181</span></span><br><span class="line"><span class="comment">#超时</span></span><br><span class="line"><span class="attr">initLimit</span>=<span class="string">5</span></span><br><span class="line"><span class="comment">#限制服务器与领导者之间过时的距离</span></span><br><span class="line"><span class="attr">syncLimit</span>=<span class="string">2</span></span><br><span class="line"><span class="comment">#server.X格式列出了组成zookeeper服务的服务器。服务器启动时，它通过在数据目录中查找文件myid*来知道它是哪台服务器。</span></span><br><span class="line"><span class="comment">#2888集群内机器通信使用，3888选举leader使用</span></span><br><span class="line"><span class="meta">server.1</span>=<span class="string">zoo1:2888:3888</span></span><br><span class="line"><span class="meta">server.2</span>=<span class="string">zoo2:2888:3888</span></span><br><span class="line"><span class="meta">server.3</span>=<span class="string">zoo3:2888:3888</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>zkServer.sh start</code>：启动zookeeper</li>
+<li><code>zkServer.sh status</code>：查看当前状态</li>
+<li><code>zkCli.sh -server 127.0.0.1:2181</code>：连接到zookeeper<ul>
+<li><code>ls /</code></li>
+<li><code>create /zk_test my_data</code>：创建一个新的znode，并将字符串my_data与该节点关联</li>
+<li><code>get /zk_test</code>：验证数据是否与znode关联</li>
+<li><code>set /zk_test junk</code>：来更改与zk_test相关的数据</li>
+<li><code>delete /zk_test</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Znode"><a href="#Znode" class="headerlink" title="Znode"></a>Znode</h2><ul>
+<li>组成<ul>
+<li>data：Znode存储的数据信息</li>
+<li>stat：包含Znode的各种元数据，如事务ID、版本号、时间戳、大小等</li>
+<li>child：当前节点的子节点引用</li>
+<li>acl：<code>access control list</code>访问控制表，表示哪些人或哪些ip可以访问本节点</li>
+</ul>
+</li>
+<li>Znode是用来存储少量的状态和配置信息，每个节点的数据最大不能超过1MB</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mybatis入门
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">clickhouse类型及函数</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/web/">web</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/django/">django</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/web/http/">http</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/">mybatis入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/24/cors/">cors</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/22/android/">android</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 小象<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>垃圾回收器 | 小象のblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="-XX:+PrintCommandLineFlags：查看命令行参数（可打印出使用的是哪个垃圾回收器）。  Serial回收器：串行回收 Client模式下默认的新生代垃圾收集器。  Serial收集器采用复制算法、串行回收和“Stop-The-World”机制的方式执行内存回收。  Serial Old-对应的老年代垃圾收集器，同样采用串行回收和“Stop-The-World”机制，只不过内存回">
+<meta property="og:type" content="article">
+<meta property="og:title" content="垃圾回收器">
+<meta property="og:url" content="https://xiaoxiangxiong.gitee.io/2020/09/30/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/index.html">
+<meta property="og:site_name" content="小象のblog">
+<meta property="og:description" content="-XX:+PrintCommandLineFlags：查看命令行参数（可打印出使用的是哪个垃圾回收器）。  Serial回收器：串行回收 Client模式下默认的新生代垃圾收集器。  Serial收集器采用复制算法、串行回收和“Stop-The-World”机制的方式执行内存回收。  Serial Old-对应的老年代垃圾收集器，同样采用串行回收和“Stop-The-World”机制，只不过内存回">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xiaoxiangxiong.gitee.io/img/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/3.jpg">
+<meta property="og:image" content="https://xiaoxiangxiong.gitee.io/img/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/2.jpg">
+<meta property="og:image" content="https://xiaoxiangxiong.gitee.io/img/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/4.jpg">
+<meta property="article:published_time" content="2020-09-30T07:07:07.000Z">
+<meta property="article:modified_time" content="2021-04-09T03:18:20.111Z">
+<meta property="article:author" content="小象">
+<meta property="article:tag" content="xiaoxiang,小象のblog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xiaoxiangxiong.gitee.io/img/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/3.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="小象のblog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="mheader">
+    <div class="mtitle-wrap">
+        <a href="/" class="mtitle">小象のblog</a>
+		<a href="/archives/" class="msubtitle">概览</a>
+		<a href="http://xiaoxiang.space" target="_self" class="msubtitle">说点什么</a>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-垃圾回收器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/30/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" class="article-date">
+  <time datetime="2020-09-30T07:07:07.000Z" itemprop="datePublished">2020-09-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>►<a class="article-category-link" href="/categories/java/jvm/">jvm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      垃圾回收器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>-XX:+PrintCommandLineFlags</strong>：查看命令行参数（可打印出使用的是哪个垃圾回收器）。</p>
+<p><img src="/img/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/3.jpg" alt="垃圾收集器"></p>
+<h3 id="Serial回收器：串行回收"><a href="#Serial回收器：串行回收" class="headerlink" title="Serial回收器：串行回收"></a>Serial回收器：串行回收</h3><ul>
+<li><p>Client模式下默认的新生代垃圾收集器。</p>
+</li>
+<li><p>Serial收集器采用复制算法、串行回收和“Stop-The-World”机制的方式执行内存回收。</p>
+</li>
+<li><p>Serial Old-对应的老年代垃圾收集器，同样采用串行回收和“Stop-The-World”机制，只不过内存回收算法使用的是标记-压缩算法。</p>
+<ul>
+<li>Serial Old是Client模式下默认的老年代的垃圾收集器。</li>
+<li>Serial Old在Server模式下主要有两个用途：①与新生代的Parallel Scavenge配合使用；②作为老年代CMS收集器的后备垃圾收集方案。</li>
+</ul>
+</li>
+<li><p>这个收集器是一个单线程的收集器，在它进行垃圾收集时，必须停掉其他所有的工作线程，直到它收集结束。</p>
+</li>
+<li><p>-XX:+UseSerialGC：指定新生代Serial，老年代Serial Old GC。</p>
+</li>
+</ul>
+<h3 id="ParNew回收器：并行回收"><a href="#ParNew回收器：并行回收" class="headerlink" title="ParNew回收器：并行回收"></a>ParNew回收器：并行回收</h3><ul>
+<li><p>多线程的Serial。</p>
+</li>
+<li><p>-XX:+UseParNewGC：指定年轻代ParNew，不影响老年代。</p>
+</li>
+<li><p>-XX:ParallelGCThreads：限制线程数量，默认开启与cpu数据相同的线程数。</p>
+</li>
+</ul>
+<h3 id="Parallel-Scavenge回收器：吞吐量优先"><a href="#Parallel-Scavenge回收器：吞吐量优先" class="headerlink" title="Parallel Scavenge回收器：吞吐量优先"></a>Parallel Scavenge回收器：吞吐量优先</h3><ul>
+<li><p>同样采用并行回收、复制算法、STW机制。</p>
+</li>
+<li><p>Parallel Scavenge收集器的目标是达到一个可控的吞吐量，它也被称为吞吐量优先的垃圾收集器。</p>
+</li>
+<li><p>自适应调节机制也是Parallel Scavenge与ParNew的一个重要区别。</p>
+</li>
+<li><p>高吞吐量可以高效的利用cpu时间，尽快的完成程序的运算任务。<strong>主要用于在后台运算而不需要太多交互的任务</strong>。</p>
+</li>
+<li><p>应用场景：执行批量处理、订单处理、工资支付、科学计算的应用程序。</p>
+</li>
+<li><p>Parallel Old：老年代垃圾收集器，采用标记-压缩算法、并行回收、STW机制。</p>
+</li>
+<li><p>-XX:+UseParallelGC：手动指定年轻代使用Parallel；-XX:+UserParallelOldGC：手动指定老年代。这两个参数，当指定一个，另一个也会被开启。</p>
+</li>
+<li><p>-XX:ParallelGCThreads：设置年轻代并行的线程数。</p>
+</li>
+<li><p>-XX:+UseAdaptiveSizePolicy：设置Parallel收集器具有自适应调节策列。</p>
+</li>
+</ul>
+<h3 id="CMS回收器：低延迟-Concurrent-Mark-Sweep"><a href="#CMS回收器：低延迟-Concurrent-Mark-Sweep" class="headerlink" title="CMS回收器：低延迟(Concurrent-Mark-Sweep)"></a>CMS回收器：低延迟(Concurrent-Mark-Sweep)</h3><ul>
+<li><p>HotSpot虚拟机中第一款真正意义上的并发收集器，实现了让垃圾收集线程与用户线程同时执行。</p>
+</li>
+<li><p>采用标记清除算法，也会导致stw。</p>
+</li>
+<li><p>运行过程：</p>
+<ul>
+<li>初始标记：仅标记GC Roots能直接关联到的对象。速度很快，需要stw。</li>
+<li>并发标记：从GC Roots的直接关联对象开始遍历整个对象图的过程，这个过程耗时较长但不需要停顿用户线程。</li>
+<li>重新标记：修正并发标记期间因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，这个阶段的stw一般会比初始标记稍长一些。</li>
+<li>并发清除：清理标记阶段判断已经死亡的对象，释放内存空间。这个阶段可与用户线程并发。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/img/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/2.jpg" alt="cms"></p>
+<ul>
+<li><p>由于在垃圾收集阶段用户线程仍在执行，所以在<strong>CMS回收过程中，要保证应用程序线程有足够的内存可用</strong>。因此，CMS收集器不能像别的收集器一样等到老年代几乎完全填满了才进行垃圾回收，而是在堆内存达到某一个阈值时，便开始进行回收。当CMS运行期间，内存无法满足程序要求，这时虚拟机会启用预备方案：临时使用Serial Old进行垃圾回收。</p>
+</li>
+<li><p>CMS采用标记-清除算法，只能采用空闲列表进行内存分配。</p>
+</li>
+<li><p>优点：低延迟，并发收集。</p>
+</li>
+<li><p>缺点：产生内存碎片；对cpu资源非常敏感，因为占用了一部分线程，会导致吞吐量降低；无法处理浮动垃圾（并发标记阶段如果产生新的垃圾，cms无法对这些垃圾进行标记，会导致这些垃圾无法及时的被回收）。</p>
+</li>
+<li><p>-XX:+UseConcMarkSweepGC：手动指定使用CMS收集器。</p>
+</li>
+</ul>
+<h3 id="G1回收器：区域分代化"><a href="#G1回收器：区域分代化" class="headerlink" title="G1回收器：区域分代化"></a>G1回收器：区域分代化</h3><ul>
+<li><p>-XX:+UseG1GC：启用G1。</p>
+</li>
+<li><p>目标：延迟可控的情况下获取尽可能高的吞吐量。</p>
+<ul>
+<li>G1是一个并行回收器，它把堆内存分割为很多不相关的区域。使用不同的region来表示Eden区、幸存者0区、幸存者1区、老年代等。</li>
+<li>G1有计划的避免在java堆中进行全区域的垃圾回收，G1跟踪各个region里面的垃圾堆积的价值大小（回收所获得的空间大小以及回收所需时间的经验值），在后台维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的region。</li>
+<li>由于这种方式的侧重点在于回收垃圾最大量的区间，所以给G1取一个名字：垃圾优先（Garbage First）。</li>
+</ul>
+</li>
+<li><p>优点：</p>
+<ul>
+<li>并行性：G1在回收期间，可以多个GC线程同时工作。此时用户线程stw。</li>
+<li>并发性：G1部分工作能与用户线程同时执行。</li>
+<li>分代收集：G1仍属于分代型垃圾收集器。但是不再要求整个Eden、年轻代、或者老年代都是连续的，也不再坚持固定大小和数量。它同时兼顾年轻代和老年代。</li>
+<li>空间整合：内存是以region为基本单位的。region之间是复制算法，整体上看可以看作是标记-压缩算法。可以避免产生内存碎片。</li>
+<li>可预测的时间停顿模型：能让使用者明确指定在一个长度为M毫秒的时间片段内，消耗在垃圾收集上的时间不得超过N毫秒。</li>
+</ul>
+</li>
+<li><p>-XX:MaxGCPauseMillis 设置期望达到的最大Gc停顿时间指标（JVM会尽力实现，但不保证达到）。默认值是200ms</p>
+</li>
+<li><p>Remembered Set：一个对象可能被不同区域region所引用。当有其它region指向本region时，记录其他region的引用。</p>
+</li>
+<li><p>G1垃圾回收的过程</p>
+<ul>
+<li>年轻代GC：①扫描根（包含RSet）；②更新RSet；③处理RSet；④复制对象；⑤处理引用。</li>
+<li>并发标记过程：①初始标记（标记根节点直接可达的对象，会触发一次年轻代GC）；②根区域扫描（扫描survivor区能直达老年代的对象并标记被引用的对象）；③并发标记（若发现一个region区域全是垃圾，则直接回收）；④再次标记；⑤独占清理；⑥并发清理阶段。</li>
+<li>混合回收：回收整个Yong Region和一部分Old Region。</li>
+<li>如果上述方式不能正常工作，就会触发Full GC。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/img/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/4.jpg" alt="现状"></p>
+<!--
+|  垃圾收集器  |    分类    |    作用位置    |      使用算法      |     特点     |               适用场景               |
+| :----------: | :--------: | :------------: | :----------------: | :----------: | :----------------------------------: |
+|    Serial    |    串行    |     新生代     |      复制算法      | 响应速度优先 |         单cpu的client模式下          |
+|    ParNew    |    并行    |     新生代     |      复制算法      | 响应速度优先 |  多cpu环境Server模式下与CMS配合使用  |
+|   Parallel   |    并行    |     新生代     |      复制算法      |  吞吐量优先  | 适用于后台运算而不需要太多交互的场景 |
+|  Serial Old  |    串行    |     老年代     |   标记-压缩算法    | 响应速度优先 |          单cpu的client模式           |
+| Parallel Old |    并行    |     老年代     |   标记-压缩算法    |  吞吐量优先  | 适用于后台运算而不需要太多交互的场景 |
+|     CMS      |    并发    |     老年代     |   标记-清除算法    | 响应速度优先 |        适用于互联网或B/S业务         |
+|      G1      | 并发、并行 | 新生代、老年代 | 标记压缩、复制算法 | 响应速度优先 |            面向服务端应用            |
+-->
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/10/06/wait%E5%92%8Cnotify/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          wait和notify
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">垃圾回收相关概念</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/web/">web</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/django/">django</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/web/http/">http</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/">mybatis入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/24/cors/">cors</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/22/android/">android</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 小象<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>python异常-IO-进程等 | 小象のblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="错误12345678910try:    i &#x3D; 10 &#x2F; int(&amp;#x27;a&amp;#x27;)except ValueError as e:    print(&quot;ValueError&quot;,e)except ZeroDivisionError as e:    print(&quot;ZeroDivisionError&quot;,e)    #raise如果不带参数，就会把当前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python异常-IO-进程等">
+<meta property="og:url" content="https://xiaoxiangxiong.gitee.io/2021/03/15/python%E5%BC%82%E5%B8%B8%E5%92%8CIO/index.html">
+<meta property="og:site_name" content="小象のblog">
+<meta property="og:description" content="错误12345678910try:    i &#x3D; 10 &#x2F; int(&amp;#x27;a&amp;#x27;)except ValueError as e:    print(&quot;ValueError&quot;,e)except ZeroDivisionError as e:    print(&quot;ZeroDivisionError&quot;,e)    #raise如果不带参数，就会把当前">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-15T05:58:56.000Z">
+<meta property="article:modified_time" content="2021-04-09T03:18:20.137Z">
+<meta property="article:author" content="小象">
+<meta property="article:tag" content="xiaoxiang,小象のblog">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="小象のblog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="mheader">
+    <div class="mtitle-wrap">
+        <a href="/" class="mtitle">小象のblog</a>
+		<a href="/archives/" class="msubtitle">概览</a>
+		<a href="http://xiaoxiang.space" target="_self" class="msubtitle">说点什么</a>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python异常和IO" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/15/python%E5%BC%82%E5%B8%B8%E5%92%8CIO/" class="article-date">
+  <time datetime="2021-03-15T05:58:56.000Z" itemprop="datePublished">2021-03-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python异常-IO-进程等
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    i = <span class="number">10</span> / int(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;ValueError&quot;</span>,e)</span><br><span class="line"><span class="keyword">except</span> ZeroDivisionError <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;ZeroDivisionError&quot;</span>,e)</span><br><span class="line">    <span class="comment">#raise如果不带参数，就会把当前错误原样抛出</span></span><br><span class="line">    <span class="keyword">raise</span> </span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">&quot;END&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>单元测试要用到了再回来补充：<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017604210683936">单元测试</a></p>
+<h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><ul>
+<li><p>以读的方式打开一个文件对象<code>f = open(&#39;test.txt&#39;,&#39;r&#39;)</code></p>
+</li>
+<li><p>文件使用完毕后必须关闭，因为文件对象会占用操作系统的资源。可以使用<code>with open(&#39;test.txt&#39;,&#39;r&#39;) as f:</code>，这种形式会自动帮我们调用close()方法。</p>
+</li>
+<li><p>读取二进制文件<code>open(&#39;test&#39;,&#39;rb&#39;)</code>，读取非UTF-8编码的文件<code>open(&#39;gbk.txt&#39;, &#39;r&#39;, encoding = &#39;gbk&#39;)</code>，遇到编码错误后忽略<code>open(&#39;test&#39;, &#39;r&#39;, encoding = &#39;gbk&#39;, errors = &#39;ignore&#39;)</code>。</p>
+</li>
+<li><p>写文件就是将<code>r</code>参数改为<code>w</code>参数，当在写文件时，操作系统往往不会立刻把数据写入磁盘，而是先缓存起来，只有调用close方法时才会保证把没有写入的数据全部写入磁盘。</p>
+</li>
+<li><p>StringIO和BytesIO是在内存中读写数据。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017624706151424">序列化</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/03/15/python%E6%A8%A1%E5%9D%97/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          python模块
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/03/14/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">python面向对象</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/web/">web</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/django/">django</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/web/http/">http</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/">mybatis入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/24/cors/">cors</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/22/android/">android</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 小象<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
