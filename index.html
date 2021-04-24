@@ -44,6 +44,122 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-maven-dependency-scope" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/23/maven-dependency-scope/" class="article-date">
+  <time datetime="2021-04-23T13:13:01.000Z" itemprop="datePublished">2021-04-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>►<a class="article-category-link" href="/categories/java/maven/">maven</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/23/maven-dependency-scope/">maven-dependency-scope</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="共6个作用域"><a href="#共6个作用域" class="headerlink" title="共6个作用域"></a>共6个作用域</h2><ol>
+<li><p>compile</p>
+<ul>
+<li>默认作用域，在项目的编译、运行、测试中都有效，依赖传递</li>
+</ul>
+</li>
+<li><p>provided</p>
+<ul>
+<li>在项目编译、测试中有效，运行中无效；依赖不传递，适用于一些web容器提供了运行时的依赖的情况。</li>
+</ul>
+</li>
+<li><p>runtime</p>
+<ul>
+<li>只在项目运行、测试中有效，依赖传递</li>
+</ul>
+</li>
+<li><p>test</p>
+<ul>
+<li>表示程序正常使用时不需要该依赖，只在测试编译和执行中有效。依赖不传递</li>
+</ul>
+</li>
+<li><p>system</p>
+<ul>
+<li>和provided很像，但是必须明确指定jar路径，它不在仓库中去寻找</li>
+</ul>
+</li>
+<li><p>import</p>
+<ul>
+<li>该作用域仅适用于<code>&lt;dependencyManagement&gt;</code>中type为pom的情况。</li>
+<li><a target="_blank" rel="noopener" href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies">Importing Dependencyies</a></li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-执行ssh命令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/19/%E6%89%A7%E8%A1%8Cssh%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2021-04-19T03:14:54.000Z" itemprop="datePublished">2021-04-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/19/%E6%89%A7%E8%A1%8Cssh%E5%91%BD%E4%BB%A4/">执行ssh命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>如何使用ssh连接linux执行shell命令？<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> space.xiaoxiang;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.jcraft.jsch.ChannelExec;</span><br><span class="line"><span class="keyword">import</span> com.jcraft.jsch.JSch;</span><br><span class="line"><span class="keyword">import</span> com.jcraft.jsch.JSchException;</span><br><span class="line"><span class="keyword">import</span> com.jcraft.jsch.Session;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.BufferedReader;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStreamReader;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通过ssh连接到linux主机，并执行一些shell命令，需要导入JSch这个包</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String host = <span class="string">&quot;localhost&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> port = <span class="number">22</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String username = <span class="string">&quot;xiaoxiang&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String password = <span class="string">&quot;asdf&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//连接到linux主机</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Session <span class="title">connect</span><span class="params">()</span> <span class="keyword">throws</span>  JSchException </span>&#123;</span><br><span class="line">        JSch jsch = <span class="keyword">new</span> JSch();</span><br><span class="line">        Session session = jsch.getSession(username, host, port);</span><br><span class="line">        session.setPassword(password);</span><br><span class="line">        session.setConfig(<span class="string">&quot;StrictHostKeyChecking&quot;</span>, <span class="string">&quot;no&quot;</span>);</span><br><span class="line">        <span class="comment">//开启会话</span></span><br><span class="line">        session.connect();</span><br><span class="line">        <span class="keyword">return</span> session;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//执行shell命令</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execCommand</span><span class="params">(Session session, String command)</span> <span class="keyword">throws</span> JSchException, IOException </span>&#123;</span><br><span class="line">        ChannelExec channelExec = (ChannelExec) session.openChannel(<span class="string">&quot;exec&quot;</span>);</span><br><span class="line">        InputStream in = channelExec.getInputStream();</span><br><span class="line">        channelExec.setCommand(command);</span><br><span class="line">        BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(channelExec.getInputStream()));</span><br><span class="line">        channelExec.connect();</span><br><span class="line">        String line;</span><br><span class="line">        <span class="keyword">while</span>((line = reader.readLine()) != <span class="keyword">null</span>)&#123;</span><br><span class="line">            System.out.println(line);</span><br><span class="line">        &#125;</span><br><span class="line">        channelExec.disconnect();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, JSchException </span>&#123;</span><br><span class="line">        App app = <span class="keyword">new</span> App();</span><br><span class="line">        Session session = app.connect();</span><br><span class="line">        app.execCommand(session, <span class="string">&quot;ls -l&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;----------&quot;</span>);</span><br><span class="line">        app.execCommand(session, <span class="string">&quot;df -h&quot;</span>);</span><br><span class="line">        session.disconnect();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-mybatis入门" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/" class="article-date">
@@ -634,153 +750,6 @@
 
 
   
-    <article id="post-python模块" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/03/15/python%E6%A8%A1%E5%9D%97/" class="article-date">
-  <time datetime="2021-03-15T11:35:28.000Z" itemprop="datePublished">2021-03-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/15/python%E6%A8%A1%E5%9D%97/">python模块</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="datetime"><a href="#datetime" class="headerlink" title="datetime"></a>datetime</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime,timedelta</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>获取当前时间<code>datetime.now()</code></li>
-<li>指定的某个日期和时间<code>datetime(2021,3,15,19,48)</code></li>
-<li>将datetime类型转化为timestamp，（timestamp是一个浮点数，整数位表示秒） <code>datetime(2021,3,15,19,49).timestamp()</code></li>
-<li>timestamp转化为datetime <code>datetime.fromtimestamp(1615809156.889315)</code></li>
-<li>str转换为datetime <code>datetime.strptime(&#39;2021-3-15 19:55:59&#39;,&#39;%Y-%m-%d %H:%M:%S&#39;)</code></li>
-<li>datetime转str <code>datetime.now().strftime(&#39;%a,%b %d %H:%M&#39;)</code></li>
-<li>datetime加减 <code>datetime.now() + timedelta(days = 1, hours = 10)</code></li>
-<li>时区转换</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">utc_dt = datetime.utcnow()</span><br><span class="line">utc_dt.astimezone(timezone(timedelta(hours=<span class="number">8</span>)))</span><br></pre></td></tr></table></figure>
-
-<h2 id="collections"><a href="#collections" class="headerlink" title="collections"></a>collections</h2><ul>
-<li>namedtuple：是一个函数，可以用来创建一个自定义的tuple对象，同时规定了tuple元素的个数，并可以用属性而不是索引来引用tuple的某个元素。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line">Point = nametuple(<span class="string">&#x27;Point&#x27;</span>,[<span class="string">&#x27;x&#x27;</span>, <span class="string">&#x27;y&#x27;</span>])</span><br><span class="line">p = Point(<span class="number">1</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>deque：双向列表，方法有<code>append()、pop()、appendleft()、popleft()</code></li>
-<li>defaultdict：和dict类似，但是在key不存在的时候返回一个默认值。</li>
-<li>OrderedDict：key会按照插入的顺序排序</li>
-<li>ChainMap：可以把一组dict串起来组成一个逻辑上的dict，本身也是一个dict，但在查找的时候，会按照顺序在内部的dict依次查找。</li>
-<li>Counter是一个计数器，可以统计字符出现的个数，实际上也是dict的子类</li>
-</ul>
-<h2 id="base64"><a href="#base64" class="headerlink" title="base64"></a>base64</h2><ul>
-<li>base64是一种用64个字符表示任意二进制数据的方法，64个字符指的是<code>A-Z, a-z, 0-9, +, /</code>。实现方法是将3个字节(3x8bit)的二进制数据编码为4字节(4x6bit，6bit的数据刚好能用上面这64个字符表示)的数据。6bit的数据刚好能用这64个字符表示。</li>
-<li>编码<code>base64.b64encode(b&#39;binary&#39;)</code>；解码<code>base64.b64decode(b&#39;binary&#39;)</code></li>
-</ul>
-<h2 id="hashlib"><a href="#hashlib" class="headerlink" title="hashlib"></a>hashlib</h2><ul>
-<li>摘要算法又称为哈希算法，散列算法，它通过一个函数，把任意长度的数据转化为一个固定长度的数据串。它是一个单向函数，对原始数据做一点点的修改都会导致计算出的摘要完全不同。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line">md5 = hashlib.md5()</span><br><span class="line"><span class="comment">#也可以将串分开，多次调用update方法</span></span><br><span class="line">md5.update(<span class="string">&quot;xiaoxiang.space&quot;</span>.encode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line"><span class="comment">#md5结果是128bit，通常用32位的16进制表示</span></span><br><span class="line">print(md5.hexdigest())</span><br><span class="line"></span><br><span class="line">sha1 = hashlib.sha1()</span><br><span class="line">sha1.update(<span class="string">&quot;xiaoxiang.space&quot;</span>.encode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line"><span class="comment">#sha1的结果是160bit，通常用一个40位的16进制字符串表示</span></span><br><span class="line">print(sha1.hexdigest())</span><br></pre></td></tr></table></figure>
-
-<h2 id="itertools"><a href="#itertools" class="headerlink" title="itertools"></a>itertools</h2><ul>
-<li>无限迭代器<code>itertools.count()</code></li>
-<li>cycle()会把传入的一个序列无限重复下去<code>itertools.cycle(&#39;ABC&#39;)</code></li>
-<li>repeat()可以把一个元素无限重复下去，提供了第二个参数可以限定重复次数<code>itertools.repeat(&#39;A&#39;, 3)</code></li>
-<li>可通过takewhile()根据函数条件来截取一个有限的序列。</li>
-<li>chain()可以把一组迭代对象串联起来，形成一个更大的迭代器。<code>itertools.chain(&#39;ABC&#39;, &#39;XYZ&#39;)</code></li>
-<li>groupby()可以把迭代器中相邻的重复元素挑出来放在一起。挑选规则是通过函数完成的，只要作用于函数的两个元素返回的值相等，这两个元素就被认为是一组的，函数的返回值作为组的key。</li>
-</ul>
-<h2 id="contextlib"><a href="#contextlib" class="headerlink" title="contextlib"></a>contextlib</h2><ul>
-<li>任何对象，只要正确实现了上下文管理，就可以用于with语句。实现上下文管理是通过<code>__enter__</code>和<code>__exit__</code>这两个方法实现的。可以通过contextlib标准库中的<code>@contextmanager</code>来实现上下文管理（更简单）</li>
-<li>有时候，我们希望在某段代码执行前后自动执行特定代码，也可以通过@contextmanager实现</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> contextlib</span><br><span class="line"><span class="meta">@contextlib.contextmanager</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tag</span>(<span class="params">name</span>):</span></span><br><span class="line">    print(<span class="string">&quot;&lt;%s&gt;&quot;</span>%name)</span><br><span class="line">    <span class="keyword">yield</span></span><br><span class="line">    print(<span class="string">&quot;&lt;/%s&gt;&quot;</span>%name)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tag(<span class="string">&quot;h1&quot;</span>):</span><br><span class="line">    print(<span class="string">&quot;hello&quot;</span>)</span><br><span class="line">    print(<span class="string">&quot;world&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>如果一个对象没有实现上下文，就不能把他用于with语句，可以用closing()来将该对象变成上下文。</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-python异常和IO" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/03/15/python%E5%BC%82%E5%B8%B8%E5%92%8CIO/" class="article-date">
-  <time datetime="2021-03-15T05:58:56.000Z" itemprop="datePublished">2021-03-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/15/python%E5%BC%82%E5%B8%B8%E5%92%8CIO/">python异常-IO-进程等</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    i = <span class="number">10</span> / int(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;ValueError&quot;</span>,e)</span><br><span class="line"><span class="keyword">except</span> ZeroDivisionError <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;ZeroDivisionError&quot;</span>,e)</span><br><span class="line">    <span class="comment">#raise如果不带参数，就会把当前错误原样抛出</span></span><br><span class="line">    <span class="keyword">raise</span> </span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    print(<span class="string">&quot;END&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>单元测试要用到了再回来补充：<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017604210683936">单元测试</a></p>
-<h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><ul>
-<li><p>以读的方式打开一个文件对象<code>f = open(&#39;test.txt&#39;,&#39;r&#39;)</code></p>
-</li>
-<li><p>文件使用完毕后必须关闭，因为文件对象会占用操作系统的资源。可以使用<code>with open(&#39;test.txt&#39;,&#39;r&#39;) as f:</code>，这种形式会自动帮我们调用close()方法。</p>
-</li>
-<li><p>读取二进制文件<code>open(&#39;test&#39;,&#39;rb&#39;)</code>，读取非UTF-8编码的文件<code>open(&#39;gbk.txt&#39;, &#39;r&#39;, encoding = &#39;gbk&#39;)</code>，遇到编码错误后忽略<code>open(&#39;test&#39;, &#39;r&#39;, encoding = &#39;gbk&#39;, errors = &#39;ignore&#39;)</code>。</p>
-</li>
-<li><p>写文件就是将<code>r</code>参数改为<code>w</code>参数，当在写文件时，操作系统往往不会立刻把数据写入磁盘，而是先缓存起来，只有调用close方法时才会保证把没有写入的数据全部写入磁盘。</p>
-</li>
-<li><p>StringIO和BytesIO是在内存中读写数据。</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017624706151424">序列化</a></p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -796,7 +765,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/web/">web</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/django/">django</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/web/http/">http</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/java%E5%B9%B6%E5%8F%91/">java并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/maven/">maven</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/web/">web</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/python/django/">django</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/web/http/">http</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/clickhouse/">clickhouse</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
     </div>
   </div>
 
@@ -824,6 +793,14 @@
       <ul>
         
           <li>
+            <a href="/2021/04/23/maven-dependency-scope/">maven-dependency-scope</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/19/%E6%89%A7%E8%A1%8Cssh%E5%91%BD%E4%BB%A4/">执行ssh命令</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/02/mybatis%E5%85%A5%E9%97%A8/">mybatis入门</a>
           </li>
         
@@ -833,14 +810,6 @@
         
           <li>
             <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/24/cors/">cors</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/22/android/">android</a>
           </li>
         
       </ul>
