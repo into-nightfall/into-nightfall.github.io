@@ -44,6 +44,75 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-python正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/15/python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-date">
+  <time datetime="2021-03-15T12:22:32.000Z" itemprop="datePublished">2021-03-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/15/python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">python正则表达式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><code>\d</code>匹配一个数字</li>
+<li><code>\w</code>匹配一个数字或字母</li>
+<li><code>.</code>匹配任意字符</li>
+<li><code>*</code>匹配0到多个字符，<code>+</code>匹配1到多个字符，<code>?</code>匹配0或1个字符，<code>&#123;n&#125;</code>表示n个字符，<code>&#123;n,m&#125;</code>表示n-m个字符</li>
+<li><code>\s</code>匹配一个空格（也包括tab）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\d&#123;<span class="number">3</span>&#125;\s+\d*	<span class="comment">#匹配3个数字，后面至少有一个空格，再后面有可能有数字，有可能没数字</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>[]</code>可用于更精确的匹配</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">0</span><span class="number">-9</span>a-z\_] <span class="comment">#匹配一个数字或一个小写字母或一个下划线</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>A|B</code>可匹配A或B</li>
+<li><code>^</code>表示行的开头，<code>^\d</code>表示必须以数字开头</li>
+<li><code>$</code>表示行的结束，<code>$\d</code>表示必须以数字结束</li>
+</ul>
+<h2 id="re模块"><a href="#re模块" class="headerlink" title="re模块"></a>re模块</h2><ul>
+<li>因为python字符串本身也用<code>\</code>转义，可以使用<code>r</code>前缀，就可以不用考虑字符串转义了。<code>r&#39;ABC\-001&#39;</code></li>
+<li><code>re.match(r&#39;\d&#123;3&#125;\-\d$&#39;),&#39;010-1&#39;)</code>，如果匹配成功就返回一个Mache对象，否则返回none。</li>
+<li><code>re.split(r&#39;[\s\,]+&#39;,&#39;a,b, c  d&#39;)</code>，切割字符串，能切割出<code>[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;]</code></li>
+<li>正则表达式还有提取字串的功能，用<code>()</code>表示的就是要提取的分组。<code>r&#39;(\d&#123;3&#125;)-(\d&#123;3,8&#125;)&#39;</code>就定义了两个组，可以使用<code>group(n)</code>方法提取出子串</li>
+</ul>
+<h2 id="贪婪匹配"><a href="#贪婪匹配" class="headerlink" title="贪婪匹配"></a>贪婪匹配</h2><ul>
+<li>正则默认的时贪婪匹配，加个<code>?</code>就可以采用非贪婪匹配。<code>\d+?</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">r = re.match(<span class="string">&#x27;(\d+?)(0*)$&#x27;</span>,<span class="string">&#x27;1200000&#x27;</span>)</span><br><span class="line">print(r.groups())</span><br><span class="line"><span class="comment">#结果(&#x27;12&#x27;, &#x27;00000&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-python模块" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/03/15/python%E6%A8%A1%E5%9D%97/" class="article-date">
@@ -940,59 +1009,6 @@ ORDER BY expr
 
 
   
-    <article id="post-mime" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/02/19/mime/" class="article-date">
-  <time datetime="2021-02-19T08:47:06.000Z" itemprop="datePublished">2021-02-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/web/">web</a>►<a class="article-category-link" href="/categories/web/http/">http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/19/mime/">mime</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>MIME：multipurpose internet mail extensions媒体类型</li>
-<li>浏览器通常使用mime类型来确定如何处理url</li>
-</ul>
-<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><h3 id="通用结构"><a href="#通用结构" class="headerlink" title="通用结构"></a>通用结构</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#大小写不敏感</span><br><span class="line">type/subtype</span><br></pre></td></tr></table></figure>
-
-<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#text表明是普通文本</span><br><span class="line">text/html </span><br><span class="line">text/css</span><br><span class="line">text/xml</span><br><span class="line">#image表示是某种图像（包括动态图片）</span><br><span class="line">image/jpeg</span><br><span class="line">image/png</span><br><span class="line">#applicaiton表示是某种二进制数据</span><br><span class="line">application/pdf</span><br><span class="line">application/json</span><br><span class="line">text/javascript</span><br><span class="line">#audio表示是某种音频文件</span><br><span class="line">#video表示是某种视频文件</span><br><span class="line">#multipart表示细分领域的文件类型的种类</span><br><span class="line">#...</span><br></pre></td></tr></table></figure>
-
-<h3 id="部分MIME类型介绍"><a href="#部分MIME类型介绍" class="headerlink" title="部分MIME类型介绍"></a>部分MIME类型介绍</h3><ul>
-<li><code>application/octet-stream</code>：这是应用程序的默认值，意思是未知的应用程序文件。</li>
-<li><code>text/plain</code>文本的默认值</li>
-<li><code>text/css</code>：网页中要被解析为css的任何css文件必须指定MIME为<code>text/css</code>。</li>
-</ul>
-<p>参考链接：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_Types">MIME类型</a> | <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types">常见MIME类型列表</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -1036,6 +1052,10 @@ ORDER BY expr
       <ul>
         
           <li>
+            <a href="/2021/04/26/equals/">equals</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/23/maven-dependency-scope/">maven-dependency-scope</a>
           </li>
         
@@ -1049,10 +1069,6 @@ ORDER BY expr
         
           <li>
             <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
           </li>
         
       </ul>

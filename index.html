@@ -44,6 +44,65 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-equals" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/26/equals/" class="article-date">
+  <time datetime="2021-04-26T01:37:09.000Z" itemprop="datePublished">2021-04-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/26/equals/">equals</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><ul>
+<li>Object的equals方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Object的toString方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> getClass().getName() + <span class="string">&quot;@&quot;</span> + Integer.toHexString(hashCode());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><ul>
+<li>String的equals方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object anObject)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//如果指向的是同一个对象就返回true</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == anObject) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//如果该对象是String的实例</span></span><br><span class="line">    <span class="keyword">if</span> (anObject <span class="keyword">instanceof</span> String) &#123;</span><br><span class="line">        String anotherString = (String)anObject;</span><br><span class="line">        <span class="comment">//value存放的是String本身的字符串</span></span><br><span class="line">        <span class="keyword">int</span> n = value.length;</span><br><span class="line">        <span class="comment">//如果两个字符串的长度相等</span></span><br><span class="line">        <span class="keyword">if</span> (n == anotherString.value.length) &#123;</span><br><span class="line">            <span class="keyword">char</span> v1[] = value;</span><br><span class="line">            <span class="keyword">char</span> v2[] = anotherString.value;</span><br><span class="line">            <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">            <span class="comment">//按下标比较两个字符串的字符</span></span><br><span class="line">            <span class="keyword">while</span> (n-- != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (v1[i] != v2[i])</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>String的hashCode方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> hash; <span class="comment">// Default to 0	</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="comment">//当通过new String(&quot;xxx&quot;)方式创建的字符串，原hash就被赋值给了现在的hash</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">(String original)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.value = original.value;</span><br><span class="line">       <span class="keyword">this</span>.hash = original.hash;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//当hash为0并且字符串长度不为0时，现在的hash是通过循环计算出来的</span></span><br><span class="line"><span class="comment">//由该计算可知道，当字符串一样，它的hashcode就一样</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> h = hash;</span><br><span class="line">       <span class="keyword">if</span> (h == <span class="number">0</span> &amp;&amp; value.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">           <span class="keyword">char</span> val[] = value;</span><br><span class="line"></span><br><span class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; value.length; i++) &#123;</span><br><span class="line">               h = <span class="number">31</span> * h + val[i];</span><br><span class="line">           &#125;</span><br><span class="line">           hash = h;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> h;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-maven-dependency-scope" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/04/23/maven-dependency-scope/" class="article-date">
@@ -681,75 +740,6 @@
 
 
   
-    <article id="post-python正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/03/15/python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-date">
-  <time datetime="2021-03-15T12:22:32.000Z" itemprop="datePublished">2021-03-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/15/python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">python正则表达式</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><code>\d</code>匹配一个数字</li>
-<li><code>\w</code>匹配一个数字或字母</li>
-<li><code>.</code>匹配任意字符</li>
-<li><code>*</code>匹配0到多个字符，<code>+</code>匹配1到多个字符，<code>?</code>匹配0或1个字符，<code>&#123;n&#125;</code>表示n个字符，<code>&#123;n,m&#125;</code>表示n-m个字符</li>
-<li><code>\s</code>匹配一个空格（也包括tab）</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\d&#123;<span class="number">3</span>&#125;\s+\d*	<span class="comment">#匹配3个数字，后面至少有一个空格，再后面有可能有数字，有可能没数字</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>[]</code>可用于更精确的匹配</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">0</span><span class="number">-9</span>a-z\_] <span class="comment">#匹配一个数字或一个小写字母或一个下划线</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>A|B</code>可匹配A或B</li>
-<li><code>^</code>表示行的开头，<code>^\d</code>表示必须以数字开头</li>
-<li><code>$</code>表示行的结束，<code>$\d</code>表示必须以数字结束</li>
-</ul>
-<h2 id="re模块"><a href="#re模块" class="headerlink" title="re模块"></a>re模块</h2><ul>
-<li>因为python字符串本身也用<code>\</code>转义，可以使用<code>r</code>前缀，就可以不用考虑字符串转义了。<code>r&#39;ABC\-001&#39;</code></li>
-<li><code>re.match(r&#39;\d&#123;3&#125;\-\d$&#39;),&#39;010-1&#39;)</code>，如果匹配成功就返回一个Mache对象，否则返回none。</li>
-<li><code>re.split(r&#39;[\s\,]+&#39;,&#39;a,b, c  d&#39;)</code>，切割字符串，能切割出<code>[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;]</code></li>
-<li>正则表达式还有提取字串的功能，用<code>()</code>表示的就是要提取的分组。<code>r&#39;(\d&#123;3&#125;)-(\d&#123;3,8&#125;)&#39;</code>就定义了两个组，可以使用<code>group(n)</code>方法提取出子串</li>
-</ul>
-<h2 id="贪婪匹配"><a href="#贪婪匹配" class="headerlink" title="贪婪匹配"></a>贪婪匹配</h2><ul>
-<li>正则默认的时贪婪匹配，加个<code>?</code>就可以采用非贪婪匹配。<code>\d+?</code></li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">r = re.match(<span class="string">&#x27;(\d+?)(0*)$&#x27;</span>,<span class="string">&#x27;1200000&#x27;</span>)</span><br><span class="line">print(r.groups())</span><br><span class="line"><span class="comment">#结果(&#x27;12&#x27;, &#x27;00000&#x27;)</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -793,6 +783,10 @@
       <ul>
         
           <li>
+            <a href="/2021/04/26/equals/">equals</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/23/maven-dependency-scope/">maven-dependency-scope</a>
           </li>
         
@@ -806,10 +800,6 @@
         
           <li>
             <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
           </li>
         
       </ul>

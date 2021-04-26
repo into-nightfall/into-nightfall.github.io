@@ -44,6 +44,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-临界资源" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/09/%E4%B8%B4%E7%95%8C%E8%B5%84%E6%BA%90/" class="article-date">
+  <time datetime="2020-04-09T03:18:52.000Z" itemprop="datePublished">2020-04-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/09/%E4%B8%B4%E7%95%8C%E8%B5%84%E6%BA%90/">临界资源</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>临界资源：某段时间内只能允许一个进程使用的资源。</li>
+<li>临界区：进程中访问临界资源的代码段。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">进程P1</span><br><span class="line">tmp1=s;</span><br><span class="line">tmp1=tmp1+<span class="number">1</span>;</span><br><span class="line">s=tmp1;</span><br><span class="line"></span><br><span class="line">进程P2</span><br><span class="line">tmp2=s;</span><br><span class="line">tmp2=tmp2<span class="number">-1</span>;</span><br><span class="line">s=tmp2;</span><br><span class="line"></span><br><span class="line">当并发执行进程P1和进程P2时，可能会造成s的结果无法预测</span><br><span class="line">此时，我们可以将s设置为临界资源，让进程P1和P2互斥的访问s，P1和P2的代码就叫做临界区。</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-系统调用" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/04/09/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" class="article-date">
@@ -512,6 +557,10 @@
       <ul>
         
           <li>
+            <a href="/2021/04/26/equals/">equals</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/23/maven-dependency-scope/">maven-dependency-scope</a>
           </li>
         
@@ -525,10 +574,6 @@
         
           <li>
             <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
           </li>
         
       </ul>

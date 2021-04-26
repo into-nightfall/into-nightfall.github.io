@@ -44,6 +44,54 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-归并排序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/21/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" class="article-date">
+  <time datetime="2020-06-21T07:03:59.000Z" itemprop="datePublished">2020-06-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>►<a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F/">排序</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/21/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">归并排序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h3><p>1.将序列元素先分割成一个个单独的元素，由于只有一个元素，我们可以看作它是有序的</p>
+<p>2.将上述的序列两两合并，并使得他们合并后的结果仍然有序</p>
+<p>3.重复上述步骤，直到合成一个完整的序列</p>
+<p>从实现上来看，有点像二叉树的后序遍历。</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>[] a,<span class="keyword">int</span> low,<span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">    <span class="comment">//可以看到，当切割到只剩一个元素时，开始进行合并</span></span><br><span class="line">    <span class="keyword">if</span>(low&lt;high)&#123;</span><br><span class="line">        <span class="comment">//找到数组中的中间点，把数组分为两部分</span></span><br><span class="line">        <span class="keyword">int</span> mid=(low+high)/<span class="number">2</span>;</span><br><span class="line">        <span class="comment">//对左边进行mergeSort操作</span></span><br><span class="line">        mergeSort(a,low,mid);</span><br><span class="line">        <span class="comment">//对右边进行mergeSort操作</span></span><br><span class="line">        mergeSort(a,mid+<span class="number">1</span>,high);</span><br><span class="line">        <span class="comment">//合并左右两部分</span></span><br><span class="line">        merge(a,low,mid,high);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] a,<span class="keyword">int</span> low,<span class="keyword">int</span> mid,<span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=low;i&lt;=high;i++)&#123;</span><br><span class="line">        <span class="comment">//缓冲空间，</span></span><br><span class="line">        buf[i]=a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//i，j分别是左指针和右指针</span></span><br><span class="line">    <span class="keyword">int</span> i,j,k;</span><br><span class="line">    <span class="comment">//比较左右两边的元素，谁小谁放在前面</span></span><br><span class="line">    <span class="keyword">for</span>(i=low,j=mid+<span class="number">1</span>,k=i;i&lt;=mid&amp;&amp;j&lt;=high;k++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(buf[i]&lt;=buf[j])</span><br><span class="line">            a[k]=buf[i++];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(buf[i]&gt;buf[j])</span><br><span class="line">            a[k]=buf[j++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当一边全部比较完成后，另一边的元素就直接送到a的后面</span></span><br><span class="line">    <span class="keyword">while</span>(i&lt;=mid)</span><br><span class="line">        a[k++]=buf[i++];</span><br><span class="line">    <span class="keyword">while</span>(j&lt;=high)</span><br><span class="line">        a[k++]=buf[j++];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h3><p>时间复杂度：O(nlogn)</p>
+<p>空间复杂度：O(n)</p>
+<p>稳定的排序算法</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-选择排序" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/06/21/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/" class="article-date">
@@ -498,51 +546,6 @@
 
 
   
-    <article id="post-临界资源" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/04/09/%E4%B8%B4%E7%95%8C%E8%B5%84%E6%BA%90/" class="article-date">
-  <time datetime="2020-04-09T03:18:52.000Z" itemprop="datePublished">2020-04-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/09/%E4%B8%B4%E7%95%8C%E8%B5%84%E6%BA%90/">临界资源</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>临界资源：某段时间内只能允许一个进程使用的资源。</li>
-<li>临界区：进程中访问临界资源的代码段。</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">进程P1</span><br><span class="line">tmp1=s;</span><br><span class="line">tmp1=tmp1+<span class="number">1</span>;</span><br><span class="line">s=tmp1;</span><br><span class="line"></span><br><span class="line">进程P2</span><br><span class="line">tmp2=s;</span><br><span class="line">tmp2=tmp2<span class="number">-1</span>;</span><br><span class="line">s=tmp2;</span><br><span class="line"></span><br><span class="line">当并发执行进程P1和进程P2时，可能会造成s的结果无法预测</span><br><span class="line">此时，我们可以将s设置为临界资源，让进程P1和P2互斥的访问s，P1和P2的代码就叫做临界区。</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -586,6 +589,10 @@
       <ul>
         
           <li>
+            <a href="/2021/04/26/equals/">equals</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/23/maven-dependency-scope/">maven-dependency-scope</a>
           </li>
         
@@ -599,10 +606,6 @@
         
           <li>
             <a href="/2021/03/27/zookeeper%E8%B5%B7%E6%AD%A5/">zookeeper起步</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/25/clickhouse%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%87%BD%E6%95%B0/">clickhouse类型及函数</a>
           </li>
         
       </ul>
